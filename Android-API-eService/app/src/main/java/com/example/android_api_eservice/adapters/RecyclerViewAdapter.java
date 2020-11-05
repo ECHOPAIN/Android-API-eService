@@ -14,19 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.android_api_eservice.R;
+import com.example.android_api_eservice.models.Pokemon;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
-    private List<String> imageNames = new ArrayList<>();
-    private List<String> images = new ArrayList<>();
+    private List<Pokemon> pokemons = new ArrayList<>();
     private Context context;
 
-    public RecyclerViewAdapter(List<String> imageNames, List<String> images, Context context) {
-        this.imageNames = imageNames;
-        this.images = images;
+    public RecyclerViewAdapter(List<Pokemon> pokemons, Context context) {
+        this.pokemons=pokemons;
         this.context = context;
     }
 
@@ -42,16 +41,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Glide.with(context)
                 .asBitmap()
-                .load(images.get(position))
+                .load(pokemons.get(position).getImageUrl())
                 .into(holder.image);
 
-        holder.imageName.setText(imageNames.get(position));
+        holder.imageName.setText(pokemons.get(position).getName());
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(context, imageNames.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, pokemons.get(position).getName(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -59,7 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return imageNames.size();
+        return pokemons.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
