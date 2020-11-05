@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.example.android_api_eservice.adapters.RecyclerViewAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
