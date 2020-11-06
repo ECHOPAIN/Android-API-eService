@@ -1,75 +1,80 @@
 package com.example.android_api_eservice;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
 
-import com.example.android_api_eservice.adapters.RecyclerViewAdapter;
-import com.example.android_api_eservice.models.Pokemon;
-import com.example.android_api_eservice.viewmodels.PokemonsViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.android_api_eservice.fragments.FavoriteFragment;
+import com.example.android_api_eservice.fragments.PokedexFragment;
+import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private FloatingActionButton fab;
-    private RecyclerView recyclerView;
-    private PokemonsViewModel pokemonsViewModel;
-    private RecyclerViewAdapter adapter;
 
+
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fab = findViewById(R.id.fab);
-        recyclerView = findViewById(R.id.recycler_view);
 
-        pokemonsViewModel = new ViewModelProvider(this).get(PokemonsViewModel.class);
-        //retreive the data from the repository
-        pokemonsViewModel.init();
-        //observe the changes
-        pokemonsViewModel.getPokemons().observe(this, new Observer<List<Pokemon>>() {
-            @Override
-            public void onChanged(List<Pokemon> pokemons) {
-                adapter.notifyDataSetChanged();
-            }
-        });
+        tabLayout = findViewById(R.id.tab_layout);
+        viewPager = findViewById(R.id.view_pager);
+        
+        prepareViewPager(viewPager);
 
-        initRecyclerView();
+        tabLayout.setupWithViewPager(viewPager);
 
-
-        final RecyclerView.LayoutManager linearLayoutManager = recyclerView.getLayoutManager();
-        // set a GridLayoutManager with 3 number of columns , vertical gravity and false value for reverseLayout to show the items from start to end
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),3,LinearLayoutManager.VERTICAL,false);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        fab.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                if (recyclerView.getLayoutManager().equals(gridLayoutManager)) {
-                    recyclerView.setLayoutManager(linearLayoutManager);
-                    fab.setImageResource(R.drawable.grid_display);
-                }else{
-                    recyclerView.setLayoutManager(gridLayoutManager);
-                    fab.setImageResource(R.drawable.list_display);
-                }
-            }
-        });
     }
 
-    private void initRecyclerView(){
-        adapter = new RecyclerViewAdapter(pokemonsViewModel.getPokemons().getValue(),this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    private void prepareViewPager(ViewPager viewPager) {
+        MainAdapter adapter = new MainAdapter(getSupportFragmentManager());
+        adapter.addFragment(new PokedexFragment(), "Pokedex");
+        adapter.addFragment(new FavoriteFragment(), "Favoris");
+        viewPager.setAdapter(adapter);
     }
+
+    private class MainAdapter extends FragmentPagerAdapter {
+        ArrayList<String> arrayList = new ArrayList<>();
+        List<Fragment> fragmentList = new ArrayList<>();
+
+        public void addFragment(Fragment fragment, String title){
+            arrayList.add(title);
+            fragmentList.add(fragment);
+        }
+
+        public MainAdapter(@NonNull FragmentManager fm) {
+            super(fm);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return arrayList.get(position);
+        }
+    }
+
+
 }
