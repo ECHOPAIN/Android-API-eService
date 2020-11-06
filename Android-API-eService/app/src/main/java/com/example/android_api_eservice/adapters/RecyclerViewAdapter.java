@@ -44,7 +44,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .load(pokemons.get(position).getImageUrl())
                 .into(holder.image);
 
-        holder.imageName.setText(pokemons.get(position).getName());
+        holder.imageName.setText("#"+pokemons.get(position).getId() + " " + pokemons.get(position).getName());
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override

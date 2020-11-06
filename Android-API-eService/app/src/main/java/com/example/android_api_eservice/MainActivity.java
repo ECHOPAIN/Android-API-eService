@@ -30,7 +30,13 @@ public class MainActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         recyclerView = findViewById(R.id.recycler_view);
 
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+
+        initImageBitmaps();
+
+        initRecyclerView();
+
+
+        final RecyclerView.LayoutManager linearLayoutManager = recyclerView.getLayoutManager();
         // set a GridLayoutManager with 3 number of columns , vertical gravity and false value for reverseLayout to show the items from start to end
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),3,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -48,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        initImageBitmaps();
     }
 
 
@@ -64,12 +68,9 @@ public class MainActivity extends AppCompatActivity {
         pokemons.add(new Pokemon("7",   "squirtle",     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"));
         pokemons.add(new Pokemon("8",   "wartortle",    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png"));
         pokemons.add(new Pokemon("9",   "blastoise",    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png"));
-
-        initRecyclerView();
     }
 
     private void initRecyclerView(){
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(pokemons,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
