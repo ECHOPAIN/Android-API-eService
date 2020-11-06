@@ -19,7 +19,7 @@ public class PokemonsViewModel extends ViewModel {
             return;
         }
         pokemonRepository = PokemonRepository.getInstance();
-        pokemons = pokemonRepository.getPokemons();
+        pokemons = pokemonRepository.getAllPokemons();
     }
 
     public LiveData<List<Pokemon>> getPokemons() {
