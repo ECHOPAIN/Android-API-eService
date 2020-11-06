@@ -1,26 +1,29 @@
 package com.example.android_api_eservice;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.android_api_eservice.adapters.RecyclerViewAdapter;
 import com.example.android_api_eservice.models.Pokemon;
+import com.example.android_api_eservice.viewmodels.PokemonsViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
-    private List<Pokemon> pokemons = new ArrayList<>();
+    private PokemonsViewModel pokemonsViewModel;
+    private RecyclerViewAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +33,16 @@ public class MainActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         recyclerView = findViewById(R.id.recycler_view);
 
-
-        initImageBitmaps();
+        pokemonsViewModel = new ViewModelProvider(this).get(PokemonsViewModel.class);
+        //retreive the data from the repository
+        pokemonsViewModel.init();
+        //observe the changes
+        pokemonsViewModel.getPokemons().observe(this, new Observer<List<Pokemon>>() {
+            @Override
+            public void onChanged(List<Pokemon> pokemons) {
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         initRecyclerView();
 
@@ -56,22 +67,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-    //default images to test
-    private void initImageBitmaps(){
-        pokemons.add(new Pokemon("1",   "bulbasaur",    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"));
-        pokemons.add(new Pokemon("2",   "ivysaur",      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png"));
-        pokemons.add(new Pokemon("3",   "venusaur",     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"));
-        pokemons.add(new Pokemon("4",   "charmander",   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"));
-        pokemons.add(new Pokemon("5",   "charmeleon",   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png"));
-        pokemons.add(new Pokemon("6",   "charizard",    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"));
-        pokemons.add(new Pokemon("7",   "squirtle",     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"));
-        pokemons.add(new Pokemon("8",   "wartortle",    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png"));
-        pokemons.add(new Pokemon("9",   "blastoise",    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png"));
-    }
-
     private void initRecyclerView(){
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(pokemons,this);
+        adapter = new RecyclerViewAdapter(pokemonsViewModel.getPokemons().getValue(),this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
