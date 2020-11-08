@@ -20,6 +20,7 @@ public class PokemonsViewModel extends ViewModel {
     private CompositeDisposable compositeDisposable;
     private PokemonToViewModelMapper pokemonToViewModelMapper;
     private MutableLiveData<List<PokemonViewItem>> pokemons = new MutableLiveData<List<PokemonViewItem>>();
+    private MutableLiveData<Boolean> isDataLoading = new MutableLiveData<Boolean>();
 
     public PokemonsViewModel(PokemonRepository pokemonRepository) {
         this.pokemonRepository = pokemonRepository;
@@ -32,8 +33,13 @@ public class PokemonsViewModel extends ViewModel {
     public MutableLiveData<List<PokemonViewItem>> getPokemons() {
         return pokemons;
     }
+    public MutableLiveData<Boolean> getIsDataLoading() {
+        return isDataLoading;
+    }
 
     public void searchPokemons() {
+        isDataLoading.setValue(true);
+
         compositeDisposable.clear();
         compositeDisposable.add(pokemonRepository.getAllPokemons()
                 .subscribeOn(Schedulers.io())
@@ -42,7 +48,7 @@ public class PokemonsViewModel extends ViewModel {
                     @Override
                     public void onSuccess(PokemonSearchResponse pokemonSearchResponse) {
                         pokemons.setValue(pokemonToViewModelMapper.map(pokemonSearchResponse.getPokemons()));
-
+                        isDataLoading.setValue(false);
                     }
 
                     @Override
@@ -50,6 +56,7 @@ public class PokemonsViewModel extends ViewModel {
                         // handle the error case
                         //Yet, do not do nothing in this app
                         System.out.println(e.toString());
+                        isDataLoading.setValue(false);
                     }
 
                 }));

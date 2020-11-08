@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.android_api_eservice.data.di.FakeDependencyInjection;
 import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonActionInterface;
@@ -28,6 +29,7 @@ import java.util.List;
 public class PokedexFragment extends Fragment implements PokemonActionInterface {
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
     private PokemonsViewModel pokemonsViewModel;
     private View view;
     private PokemonAdapter pokemonAdapter;
@@ -77,6 +79,7 @@ public class PokedexFragment extends Fragment implements PokemonActionInterface 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setupRecyclerView();
+        progressBar = view.findViewById(R.id.progress_bar);
         registerViewModels();
     }
 
@@ -87,6 +90,13 @@ public class PokedexFragment extends Fragment implements PokemonActionInterface 
             @Override
             public void onChanged(List<PokemonViewItem> pokemonViewItems) {
                 pokemonAdapter.bindViewModels(pokemonViewItems);
+            }
+        });
+
+        pokemonsViewModel.getIsDataLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isDataLoading) {
+                progressBar.setVisibility(isDataLoading ? View.VISIBLE : View.GONE);
             }
         });
     }
