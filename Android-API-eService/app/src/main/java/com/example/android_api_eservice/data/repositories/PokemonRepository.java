@@ -20,8 +20,8 @@ public class PokemonRepository {
     }
 
 
-    public Single<PokemonSearchResponse> getAllPokemons(){
-        return pokemonRemoteDataSource.getAllPokemons();
+    public Single<PokemonSearchResponse> getPokemons(String offset, String limit){
+        return pokemonRemoteDataSource.getPokemons(offset, limit);
     }
 
     public Single<PokemonDetails> getPokemonDetail(String name) {

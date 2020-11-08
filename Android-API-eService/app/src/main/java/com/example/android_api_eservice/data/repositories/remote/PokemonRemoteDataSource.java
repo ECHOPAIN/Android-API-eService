@@ -13,8 +13,8 @@ public class PokemonRemoteDataSource {
         this.pokemonService=pokemonService;
     }
 
-    public Single<PokemonSearchResponse> getAllPokemons(){
-        return pokemonService.getAllPokemons();
+    public Single<PokemonSearchResponse> getPokemons(String offset, String limit){
+        return pokemonService.getPokemons(offset, limit);
     }
     public Single<PokemonDetails> getPokemonDetail(String name){
         return pokemonService.getPokemonDetail(name);

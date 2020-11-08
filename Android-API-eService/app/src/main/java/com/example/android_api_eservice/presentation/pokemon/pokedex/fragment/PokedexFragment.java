@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.android_api_eservice.data.di.FakeDependencyInjection;
 import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonActionInterface;
@@ -106,5 +107,17 @@ public class PokedexFragment extends Fragment implements PokemonActionInterface 
         pokemonAdapter = new PokemonAdapter(this);
         recyclerView.setAdapter(pokemonAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        //if we reach the bottom of the recyclerview we should load more pokemons
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    pokemonsViewModel.loadMorePokemons();
+                }
+            }
+        });
     }
 }
