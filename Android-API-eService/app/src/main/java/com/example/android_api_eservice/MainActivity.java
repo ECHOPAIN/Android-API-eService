@@ -10,15 +10,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.example.android_api_eservice.fragments.FavoriteFragment;
-import com.example.android_api_eservice.fragments.PokedexFragment;
+import com.example.android_api_eservice.presentation.pokemon.favorite.fragment.FavoriteFragment;
+import com.example.android_api_eservice.presentation.pokemon.pokedex.fragment.PokedexFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -46,11 +45,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class MainAdapter extends FragmentPagerAdapter {
-        ArrayList<String> arrayList = new ArrayList<>();
+        ArrayList<String> titleList = new ArrayList<>();
         List<Fragment> fragmentList = new ArrayList<>();
 
         public void addFragment(Fragment fragment, String title){
-            arrayList.add(title);
+            titleList.add(title);
             fragmentList.add(fragment);
         }
 
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return arrayList.get(position);
+            return titleList.get(position);
         }
     }
 

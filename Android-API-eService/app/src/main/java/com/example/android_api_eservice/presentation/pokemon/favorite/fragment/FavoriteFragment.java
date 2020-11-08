@@ -1,4 +1,4 @@
-package com.example.android_api_eservice.fragments;
+package com.example.android_api_eservice.presentation.pokemon.favorite.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,10 +13,6 @@ public class FavoriteFragment extends Fragment {
 
     public FavoriteFragment() {
         // Required empty public constructor
-    }
-
-    public static FavoriteFragment newInstance() {
-        return new FavoriteFragment();
     }
 
     @Override
