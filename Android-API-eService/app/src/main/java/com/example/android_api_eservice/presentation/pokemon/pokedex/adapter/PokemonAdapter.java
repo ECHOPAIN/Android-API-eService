@@ -1,5 +1,6 @@
 package com.example.android_api_eservice.presentation.pokemon.pokedex.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.example.android_api_eservice.PokemonDetail;
 import com.example.android_api_eservice.R;
 
 import java.util.ArrayList;
@@ -49,12 +51,15 @@ public class PokemonAdapter  extends RecyclerView.Adapter<PokemonAdapter.Pokemon
     @Override
     public void onBindViewHolder(PokemonViewHolder holder, final int position) {
         holder.bind(pokemonViewItemList.get(position));
+
+        //open PokemonDetail activity
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Toast.makeText(view.getContext(), pokemonViewItemList.get(position).getName(), Toast.LENGTH_SHORT).show();
-
+                //Toast.makeText(view.getContext(), pokemonViewItemList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), PokemonDetail.class);
+                intent.putExtra("pokemonId",pokemonViewItemList.get(position).getId());
+                view.getContext().startActivity(intent);
             }
         });
     }

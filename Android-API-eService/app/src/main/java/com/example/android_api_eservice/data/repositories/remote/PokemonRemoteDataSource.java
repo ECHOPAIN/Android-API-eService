@@ -16,8 +16,8 @@ public class PokemonRemoteDataSource {
     public Single<PokemonSearchResponse> getPokemons(String offset, String limit){
         return pokemonService.getPokemons(offset, limit);
     }
-    public Single<PokemonDetails> getPokemonDetail(String name){
-        return pokemonService.getPokemonDetail(name);
+    public Single<PokemonDetails> getPokemonDetail(String id){
+        return pokemonService.getPokemonDetail(id);
     }
 
 

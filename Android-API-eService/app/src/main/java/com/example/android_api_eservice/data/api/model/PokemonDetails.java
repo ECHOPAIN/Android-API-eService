@@ -1,23 +1,50 @@
 package com.example.android_api_eservice.data.api.model;
 
+import java.util.List;
+
 public class PokemonDetails {
-    //private String abilities;
+    //private Abilities abilities;
     private String base_experience;
-    //private String forms;
+    //private Forms forms;
     //private String game_indices;
     private String height;
-    //private String held_items;
+    //private Held_items held_items;
     private String id;
     private String is_default;
     private String location_area_encounters;
-    //private String moves;
+    //private Moves moves;
     private String name;
     private String order;
-    //private String species;
-    //private String sprites;
-    //private String stats;
-    //private String types;
+    //private Species species;
+    private Sprites sprites;
+    private List<Stats> stats;
+    private List<Types> types;
     private String weight;
+
+
+    public List<Stats> getStats() {
+        return stats;
+    }
+
+    public void setStats(List<Stats> stats) {
+        this.stats = stats;
+    }
+
+    public List<Types> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<Types> types) {
+        this.types = types;
+    }
+
+    public Sprites getSprites() {
+        return sprites;
+    }
+
+    public void setSprites(Sprites sprites) {
+        this.sprites = sprites;
+    }
 
     public String getBase_experience() {
         return base_experience;

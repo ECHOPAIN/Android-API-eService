@@ -24,8 +24,8 @@ public class PokemonRepository {
         return pokemonRemoteDataSource.getPokemons(offset, limit);
     }
 
-    public Single<PokemonDetails> getPokemonDetail(String name) {
-        return pokemonRemoteDataSource.getPokemonDetail(name);
+    public Single<PokemonDetails> getPokemonDetail(String id) {
+        return pokemonRemoteDataSource.getPokemonDetail(id);
     }
 
 }
