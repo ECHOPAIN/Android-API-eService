@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +23,7 @@ import io.reactivex.schedulers.Schedulers;
 public class PokemonDetail extends AppCompatActivity {
 
     private TextView textViewPokemonName;
+    private TextView textViewPokemonId;
     private ImageView imageView;
     private TextView textViewPokemonType;
     private TextView textViewPokemonHeight;
@@ -33,7 +34,13 @@ public class PokemonDetail extends AppCompatActivity {
     private TextView textViewPokemonSpecialAttack;
     private TextView textViewPokemonSpecialDefense;
     private TextView textViewPokemonSpeed;
-    private RelativeLayout relativeLayout;
+    private ProgressBar progressBarPokemonHp;
+    private ProgressBar progressBarPokemonAttack;
+    private ProgressBar progressBarPokemonDefense;
+    private ProgressBar progressBarPokemonSpecialAttack;
+    private ProgressBar progressBarPokemonSpecialDefense;
+    private ProgressBar progressBarPokemonSpeed;
+    private LinearLayout detailLayout;
     private ProgressBar progressBar;
     private PokemonRepository pokemonRepository;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -44,17 +51,24 @@ public class PokemonDetail extends AppCompatActivity {
         setContentView(R.layout.activity_pokemon_detail);
 
         textViewPokemonName = findViewById(R.id.pokemon_detail_name);
+        textViewPokemonId = findViewById(R.id.pokemon_detail_id);
         imageView = findViewById(R.id.pokemon_detail_image);
         textViewPokemonType = findViewById(R.id.pokemon_detail_type);
-        textViewPokemonHeight = findViewById(R.id.pokemon_detail_height);
-        textViewPokemonWeight = findViewById(R.id.pokemon_detail_weight);
-        textViewPokemonHp = findViewById(R.id.pokemon_detail_hp);
-        textViewPokemonAttack = findViewById(R.id.pokemon_detail_attack);
-        textViewPokemonDefense = findViewById(R.id.pokemon_detail_defense);
-        textViewPokemonSpecialAttack = findViewById(R.id.pokemon_detail_special_attack);
-        textViewPokemonSpecialDefense = findViewById(R.id.pokemon_detail_special_defense);
-        textViewPokemonSpeed = findViewById(R.id.pokemon_detail_speed);
-        relativeLayout = findViewById(R.id.detail_layout);
+        //textViewPokemonHeight = findViewById(R.id.pokemon_detail_height);
+        //textViewPokemonWeight = findViewById(R.id.pokemon_detail_weight);
+        textViewPokemonHp = findViewById(R.id.pokemon_detail_hp_value);
+        textViewPokemonAttack = findViewById(R.id.pokemon_detail_attack_value);
+        textViewPokemonDefense = findViewById(R.id.pokemon_detail_defense_value);
+        textViewPokemonSpecialAttack = findViewById(R.id.pokemon_detail_spatk_value);
+        textViewPokemonSpecialDefense = findViewById(R.id.pokemon_detail_spdef_value);
+        textViewPokemonSpeed = findViewById(R.id.pokemon_detail_speed_value);
+        progressBarPokemonHp = findViewById(R.id.pokemon_detail_hp_bar);
+        progressBarPokemonAttack = findViewById(R.id.pokemon_detail_attack_bar);
+        progressBarPokemonDefense = findViewById(R.id.pokemon_detail_defense_bar);
+        progressBarPokemonSpecialAttack = findViewById(R.id.pokemon_detail_spatk_bar);
+        progressBarPokemonSpecialDefense = findViewById(R.id.pokemon_detail_spdef_bar);
+        progressBarPokemonSpeed = findViewById(R.id.pokemon_detail_speed_bar);
+        detailLayout = findViewById(R.id.detail_layout);
         progressBar = findViewById(R.id.pokemon_detail_progress_bar);
 
         pokemonRepository = FakeDependencyInjection.getPokemonRepository();
@@ -65,6 +79,8 @@ public class PokemonDetail extends AppCompatActivity {
     }
 
     private void fetchAndDisplayPokemonDetails() {
+
+        detailLayout.setVisibility(View.GONE);
 
         if(getIntent().hasExtra("pokemonId")) {
             String pokemonId = getIntent().getStringExtra(("pokemonId"));
@@ -103,6 +119,9 @@ public class PokemonDetail extends AppCompatActivity {
         name = name.substring(0, 1).toUpperCase() + name.substring(1);
         textViewPokemonName.setText(name);
 
+        //id
+        textViewPokemonId.setText("#"+pokemonDetails.getId());
+
         //Sprite
         Glide.with(this)
                 .load(pokemonDetails.getSprites().getFront_default())
@@ -119,6 +138,10 @@ public class PokemonDetail extends AppCompatActivity {
             textViewPokemonType.setText(pokemonDetails.getTypes().get(0).getType().getName().toUpperCase() + " - " + pokemonDetails.getTypes().get(1).getType().getName().toUpperCase());
         }
 
+        //set the background according to the primary type
+        setBackground(detailLayout,pokemonDetails.getTypes().get(0).getType().getName());
+
+        /*
         //Height
         String height = pokemonDetails.getHeight();
         if(height.length()<=1){
@@ -133,39 +156,106 @@ public class PokemonDetail extends AppCompatActivity {
             weight=0+weight;
         }
         weight=weight.substring(0,weight.length()-1)+"."+weight.substring(weight.length()-1,weight.length());
-        textViewPokemonWeight.setText("Weight : "+weight+"kg");
+        textViewPokemonWeight.setText("Weight : "+weight+"kg");*/
 
+
+        //Stats
+        Integer maxValue = Math.max(Integer.valueOf(pokemonDetails.getStats().get(0).getBase_stat()),
+                                    Math.max(Integer.valueOf(pokemonDetails.getStats().get(1).getBase_stat()),
+                                            Math.max(Integer.valueOf(pokemonDetails.getStats().get(2).getBase_stat()),
+                                                    Math.max(Integer.valueOf(pokemonDetails.getStats().get(3).getBase_stat()),
+                                                            Math.max(Integer.valueOf(pokemonDetails.getStats().get(4).getBase_stat()),
+                                                                    Integer.valueOf(pokemonDetails.getStats().get(5).getBase_stat()))))));
         //Hp
-        String hpName = pokemonDetails.getStats().get(0).getStat().getName();
-        hpName = hpName.substring(0, 1).toUpperCase() + hpName.substring(1);
-        textViewPokemonHp.setText(hpName + " : " + pokemonDetails.getStats().get(0).getBase_stat());
+        textViewPokemonHp.setText(pokemonDetails.getStats().get(0).getBase_stat());
+        progressBarPokemonHp.setMax(maxValue);
+        progressBarPokemonHp.setProgress(Integer.valueOf(pokemonDetails.getStats().get(0).getBase_stat()));
 
         //Attack
-        String attackName = pokemonDetails.getStats().get(1).getStat().getName();
-        attackName = attackName.substring(0, 1).toUpperCase() + attackName.substring(1);
-        textViewPokemonAttack.setText(attackName + " : " + pokemonDetails.getStats().get(1).getBase_stat());
+        textViewPokemonAttack.setText(pokemonDetails.getStats().get(1).getBase_stat());
+        progressBarPokemonAttack.setMax(maxValue);
+        progressBarPokemonAttack.setProgress(Integer.valueOf(pokemonDetails.getStats().get(1).getBase_stat()));
 
         //Defense
-        String defenseName = pokemonDetails.getStats().get(2).getStat().getName();
-        defenseName = defenseName.substring(0, 1).toUpperCase() + defenseName.substring(1);
-        textViewPokemonDefense.setText(defenseName + " : " + pokemonDetails.getStats().get(2).getBase_stat());
+        textViewPokemonDefense.setText(pokemonDetails.getStats().get(2).getBase_stat());
+        progressBarPokemonDefense.setMax(maxValue);
+        progressBarPokemonDefense.setProgress(Integer.valueOf(pokemonDetails.getStats().get(2).getBase_stat()));
 
         //Special Attack
-        String specialAttackName = pokemonDetails.getStats().get(3).getStat().getName();
-        specialAttackName = specialAttackName.substring(0, 1).toUpperCase() + specialAttackName.substring(1);
-        textViewPokemonSpecialAttack.setText(specialAttackName + " : " + pokemonDetails.getStats().get(3).getBase_stat());
+        textViewPokemonSpecialAttack.setText(pokemonDetails.getStats().get(3).getBase_stat());
+        progressBarPokemonSpecialAttack.setMax(maxValue);
+        progressBarPokemonSpecialAttack.setProgress(Integer.valueOf(pokemonDetails.getStats().get(3).getBase_stat()));
 
         //Special Defense
-        String specialDefenseName = pokemonDetails.getStats().get(4).getStat().getName();
-        specialDefenseName = specialDefenseName.substring(0, 1).toUpperCase() + specialDefenseName.substring(1);
-        textViewPokemonSpecialDefense.setText(specialDefenseName + " : " + pokemonDetails.getStats().get(4).getBase_stat());
+        textViewPokemonSpecialDefense.setText(pokemonDetails.getStats().get(4).getBase_stat());
+        progressBarPokemonSpecialDefense.setMax(maxValue);
+        progressBarPokemonSpecialDefense.setProgress(Integer.valueOf(pokemonDetails.getStats().get(4).getBase_stat()));
 
         //Speed
-        String speedName = pokemonDetails.getStats().get(5).getStat().getName();
-        speedName = speedName.substring(0, 1).toUpperCase() + speedName.substring(1);
-        textViewPokemonSpeed.setText(speedName + " : " + pokemonDetails.getStats().get(5).getBase_stat());
+        textViewPokemonSpeed.setText(pokemonDetails.getStats().get(5).getBase_stat());
+        progressBarPokemonSpeed.setMax(maxValue);
+        progressBarPokemonSpeed.setProgress(Integer.valueOf(pokemonDetails.getStats().get(5).getBase_stat()));
 
 
-        relativeLayout.setVisibility(View.VISIBLE);
+        detailLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void setBackground(LinearLayout linearLayout, String type) {
+        switch(type.toLowerCase()) {
+            case "normal":
+                linearLayout.setBackgroundResource(R.drawable.normal);
+                break;
+            case "fighting":
+                linearLayout.setBackgroundResource(R.drawable.fighting);
+                break;
+            case "poison":
+                linearLayout.setBackgroundResource(R.drawable.poison);
+                break;
+            case "ground":
+                linearLayout.setBackgroundResource(R.drawable.ground);
+                break;
+            case "rock":
+                linearLayout.setBackgroundResource(R.drawable.rock);
+                break;
+            case "bug":
+                linearLayout.setBackgroundResource(R.drawable.bug);
+                break;
+            case "ghost":
+                linearLayout.setBackgroundResource(R.drawable.ghost);
+                break;
+            case "steel":
+                linearLayout.setBackgroundResource(R.drawable.steel);
+                break;
+            case "fire":
+                linearLayout.setBackgroundResource(R.drawable.fire);
+                break;
+            case "water":
+                linearLayout.setBackgroundResource(R.drawable.water);
+                break;
+            case "grass":
+                linearLayout.setBackgroundResource(R.drawable.grass);
+                break;
+            case "electric":
+                linearLayout.setBackgroundResource(R.drawable.electric);
+                break;
+            case "psychic":
+                linearLayout.setBackgroundResource(R.drawable.psychic);
+                break;
+            case "ice":
+                linearLayout.setBackgroundResource(R.drawable.ice);
+                break;
+            case "dragon":
+                linearLayout.setBackgroundResource(R.drawable.dragon);
+                break;
+            case "dark":
+                linearLayout.setBackgroundResource(R.drawable.dark);
+                break;
+            case "fairy":
+                linearLayout.setBackgroundResource(R.drawable.fairy);
+                break;
+
+            default:
+                linearLayout.setBackgroundResource(R.drawable.normal);
+        }
     }
 }
