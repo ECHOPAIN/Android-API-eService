@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,7 +80,7 @@ public class PokemonAdapter  extends RecyclerView.Adapter<PokemonAdapter.Pokemon
         private TextView imageName;
         private ImageView image;
         private View v;
-        RelativeLayout parentLayout;
+        LinearLayout parentLayout;
 
         public PokemonViewHolder(View v, final PokemonActionInterface pokemonActionInterface) {
             super(v);
