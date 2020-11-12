@@ -8,9 +8,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,7 +43,7 @@ import java.util.List;
                                              int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_listitem, parent, false);
+                .inflate(R.layout.pokemon_listitem, parent, false);
         PokemonViewHolder pokemonViewHolder = new PokemonViewHolder(v, pokemonActionInterface);
         return pokemonViewHolder;
     }

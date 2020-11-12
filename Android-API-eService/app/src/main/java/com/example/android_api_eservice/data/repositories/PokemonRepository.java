@@ -13,6 +13,7 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
@@ -34,13 +35,13 @@ public class PokemonRepository {
         return pokemonRemoteDataSource.getPokemons(offset, limit)
                 .zipWith(pokemonLocalDataSource.getFavoriteIdList(), new BiFunction<PokemonSearchResponse, List<String>, PokemonSearchResponse>() {
                     @Override
-                    public PokemonSearchResponse apply(PokemonSearchResponse bookSearchResponse, List<String> idList) throws Exception {
-                        for (Pokemon pokemon : bookSearchResponse.getPokemons()) {
+                    public PokemonSearchResponse apply(PokemonSearchResponse pokemonSearchResponse, List<String> idList) throws Exception {
+                        for (Pokemon pokemon : pokemonSearchResponse.getPokemons()) {
                             if (idList.contains(pokemon.getId())) {
                                 pokemon.setFavorite();
                             }
                         }
-                        return bookSearchResponse;
+                        return pokemonSearchResponse;
                     }
                 });
     }
@@ -67,5 +68,9 @@ public class PokemonRepository {
 
     public Completable removePokemonFromFavorites(String pokemonId) {
         return pokemonLocalDataSource.deletePokemonFromFavorites(pokemonId);
+    }
+
+    public Flowable<List<PokemonEntity>> getFavoritePokemons() {
+        return pokemonLocalDataSource.loadFavorites();
     }
 }

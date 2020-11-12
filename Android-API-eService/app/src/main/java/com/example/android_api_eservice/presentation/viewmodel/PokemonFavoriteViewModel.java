@@ -3,17 +3,24 @@ package com.example.android_api_eservice.presentation.viewmodel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.android_api_eservice.data.entity.PokemonEntity;
 import com.example.android_api_eservice.data.repositories.PokemonRepository;
+import com.example.android_api_eservice.presentation.pokemon.favorite.adapter.PokemonDetailViewModel;
+import com.example.android_api_eservice.presentation.pokemon.favorite.mapper.PokemonEntityToDetailViewModelMapper;
+
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.ResourceSubscriber;
 
 public class PokemonFavoriteViewModel extends ViewModel {
 
     private PokemonRepository pokemonRepository;
     private CompositeDisposable compositeDisposable;
+    private PokemonEntityToDetailViewModelMapper pokemonEntityToDetailViewModelMapper;
 
 
     final MutableLiveData<Event<String>> pokemonAddedEvent = new MutableLiveData<Event<String>>();
@@ -22,6 +29,7 @@ public class PokemonFavoriteViewModel extends ViewModel {
     public PokemonFavoriteViewModel(PokemonRepository pokemonRepository) {
         this.pokemonRepository = pokemonRepository;
         this.compositeDisposable = new CompositeDisposable();
+        this.pokemonEntityToDetailViewModelMapper = new PokemonEntityToDetailViewModelMapper();
     }
 
     public void addPokemonToFavorite(final String pokemonId) {
@@ -56,5 +64,51 @@ public class PokemonFavoriteViewModel extends ViewModel {
 
                     }
                 }));
+    }
+
+
+
+    private MutableLiveData<List<PokemonDetailViewModel>> favorites;
+    private MutableLiveData<Boolean> isDataLoading = new MutableLiveData<Boolean>();
+
+    public MutableLiveData<List<PokemonDetailViewModel>> getFavorites() {
+        isDataLoading.setValue(true);
+        if (favorites == null) {
+            favorites = new MutableLiveData<List<PokemonDetailViewModel>>();
+            compositeDisposable.add(pokemonRepository.getFavoritePokemons()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new ResourceSubscriber<List<PokemonEntity>>() {
+
+                        @Override
+                        public void onNext(List<PokemonEntity> pokemonEntityList) {
+                            isDataLoading.setValue(false);
+                            favorites.setValue(pokemonEntityToDetailViewModelMapper.map(pokemonEntityList));
+                            System.out.println("BIND FAVORITES");
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            e.printStackTrace();
+                            isDataLoading.setValue(false);
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            //Do Nothing
+                            isDataLoading.setValue(false);
+                        }
+                    }));
+
+        }
+        return favorites;
+    }
+
+    public MutableLiveData<Event<String>> getPokemonAddedEvent() {
+        return pokemonAddedEvent;
+    }
+
+    public MutableLiveData<Event<String>> getPokemonDeletedEvent() {
+        return pokemonDeletedEvent;
     }
 }
