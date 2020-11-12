@@ -22,6 +22,7 @@ import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.Pok
 import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonAdapter;
 import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonViewItem;
 import com.example.android_api_eservice.R;
+import com.example.android_api_eservice.presentation.viewmodel.PokemonFavoriteViewModel;
 import com.example.android_api_eservice.presentation.viewmodel.PokemonsViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,6 +36,7 @@ public class PokedexFragment extends Fragment implements PokemonActionInterface 
     private View view;
     private PokemonAdapter pokemonAdapter;
     final RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+    private PokemonFavoriteViewModel pokemonFavoriteViewModel;
 
     public PokedexFragment() {
         // Required empty public constructor
@@ -86,6 +88,7 @@ public class PokedexFragment extends Fragment implements PokemonActionInterface 
 
     private void registerViewModels() {
         pokemonsViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(PokemonsViewModel.class);
+        pokemonFavoriteViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(PokemonFavoriteViewModel.class);
 
         pokemonsViewModel.getPokemons().observe(getViewLifecycleOwner(), new Observer<List<PokemonViewItem>>() {
             @Override
@@ -119,5 +122,15 @@ public class PokedexFragment extends Fragment implements PokemonActionInterface 
                 }
             }
         });
+    }
+
+
+    @Override
+    public void onFavoriteToggle(String pokemonId, boolean isFavorite) {
+        if (isFavorite) {
+            pokemonFavoriteViewModel.addPokemonToFavorite(pokemonId);
+        } else {
+            pokemonFavoriteViewModel.removePokemonFromFavorites(pokemonId);
+        }
     }
 }

@@ -1,25 +1,39 @@
 package com.example.android_api_eservice.data.repositories.local;
 
 import com.example.android_api_eservice.data.api.model.Pokemon;
+import com.example.android_api_eservice.data.db.PokemonDatabase;
+import com.example.android_api_eservice.data.entity.PokemonEntity;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableSource;
+import io.reactivex.Flowable;
+import io.reactivex.Single;
+
 public class PokemonLocalDataSource {
 
+    private PokemonDatabase pokemonDatabase;
 
-    /*public Collection<Pokemon> setPokemonsFromLocal(){
-        List<Pokemon> dataSet = new ArrayList<>();
-        dataSet.add(new Pokemon("1",   "bulbasaur",    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"));
-        dataSet.add(new Pokemon("2",   "ivysaur",      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png"));
-        dataSet.add(new Pokemon("3",   "venusaur",     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"));
-        dataSet.add(new Pokemon("4",   "charmander",   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"));
-        dataSet.add(new Pokemon("5",   "charmeleon",   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png"));
-        dataSet.add(new Pokemon("6",   "charizard",    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"));
-        dataSet.add(new Pokemon("7",   "squirtle",     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"));
-        dataSet.add(new Pokemon("8",   "wartortle",    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png"));
-        dataSet.add(new Pokemon("9",   "blastoise",    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png"));
-        return dataSet;
-    }*/
+    public PokemonLocalDataSource(PokemonDatabase pokemonDatabase) {
+        this.pokemonDatabase = pokemonDatabase;
+    }
+
+    public Flowable<List<PokemonEntity>> loadFavorites() {
+        return pokemonDatabase.pokemonDao().loadFavorites();
+    }
+
+    public CompletableSource addPokemonToFavorites(PokemonEntity pokemonEntity) {
+        return pokemonDatabase.pokemonDao().addPokemonToFavorites(pokemonEntity);
+    }
+
+    public Completable deletePokemonFromFavorites(String id) {
+        return pokemonDatabase.pokemonDao().deletePokemonFromFavorites(id);
+    }
+
+    public Single<List<String>> getFavoriteIdList() {
+        return pokemonDatabase.pokemonDao().getFavoriteIdList();
+    }
 }

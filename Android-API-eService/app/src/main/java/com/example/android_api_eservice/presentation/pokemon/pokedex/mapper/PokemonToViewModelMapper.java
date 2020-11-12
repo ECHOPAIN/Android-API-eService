@@ -13,6 +13,7 @@ public class PokemonToViewModelMapper {
         pokemonViewItem.setId(pokemon.getId());
         pokemonViewItem.setName(pokemon.getName());
         pokemonViewItem.setFront_default(pokemon.getFront_default());
+        pokemonViewItem.setFavorite(pokemon.isFavorite());
         return pokemonViewItem;
     }
 

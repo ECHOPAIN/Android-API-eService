@@ -3,6 +3,7 @@ package com.example.android_api_eservice.data.api.model;
 public class Pokemon {
     private String name;
     private String url;
+    private boolean isFavorite;
 
     public String getId() {
         String[] urlSplitted = url.split("/");
@@ -28,5 +29,13 @@ public class Pokemon {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public void setFavorite() {
+        isFavorite = true;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
     }
 }

@@ -1,18 +1,23 @@
-package com.example.android_api_eservice.presentation.pokemon.pokedex.adapter;
+package com.example.android_api_eservice.data.entity;
 
-public class PokemonViewItem {
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    private String id;
+@Entity
+public class PokemonEntity {
+    @NonNull
+    @PrimaryKey
+    public String id;
     private String name;
     private String front_default;
-    private boolean isFavorite;
 
-
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
@@ -30,13 +35,5 @@ public class PokemonViewItem {
 
     public void setFront_default(String front_default) {
         this.front_default = front_default;
-    }
-
-    public boolean isFavorite() {
-        return isFavorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
     }
 }

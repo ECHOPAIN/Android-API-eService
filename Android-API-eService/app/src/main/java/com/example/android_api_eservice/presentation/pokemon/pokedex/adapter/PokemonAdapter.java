@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,7 +22,7 @@ import com.example.android_api_eservice.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PokemonAdapter  extends RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>{
+    public class PokemonAdapter  extends RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder> {
     private List<PokemonViewItem> pokemonViewItemList;
     private PokemonActionInterface pokemonActionInterface;
 
@@ -72,14 +74,13 @@ public class PokemonAdapter  extends RecyclerView.Adapter<PokemonAdapter.Pokemon
     }
 
 
-
-
-
-
     public static class PokemonViewHolder extends RecyclerView.ViewHolder {
         private TextView imageName;
         private ImageView image;
         private View v;
+        private CheckBox favoriteCheckBox;
+        private PokemonActionInterface pokemonActionInterface;
+        private PokemonViewItem pokemonViewItem;
         LinearLayout parentLayout;
 
         public PokemonViewHolder(View v, final PokemonActionInterface pokemonActionInterface) {
@@ -88,11 +89,24 @@ public class PokemonAdapter  extends RecyclerView.Adapter<PokemonAdapter.Pokemon
             imageName = v.findViewById(R.id.image_name);
             image = v.findViewById(R.id.image);
             parentLayout = itemView.findViewById(R.id.parent_layout);
+            favoriteCheckBox = v.findViewById(R.id.favorite_checkbox);
+            this.pokemonActionInterface = pokemonActionInterface;
+            setupListeners();
+        }
+
+        private void setupListeners() {
+            favoriteCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    pokemonActionInterface.onFavoriteToggle(pokemonViewItem.getId(), b);
+                    pokemonViewItem.setFavorite(b);
+                }
+            });
         }
 
 
-
         void bind(PokemonViewItem pokemonViewItem) {
+            this.pokemonViewItem = pokemonViewItem;
             imageName.setText("#" + pokemonViewItem.getId() + " " + pokemonViewItem.getName());
             Glide.with(v)
                     .load(pokemonViewItem.getFront_default())
@@ -101,6 +115,7 @@ public class PokemonAdapter  extends RecyclerView.Adapter<PokemonAdapter.Pokemon
                     .circleCrop()
                     .into(image);
 
+            favoriteCheckBox.setChecked(pokemonViewItem.isFavorite());
         }
 
     }

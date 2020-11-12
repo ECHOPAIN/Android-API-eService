@@ -2,6 +2,10 @@ package com.example.android_api_eservice.data.di;
 
 import android.content.Context;
 
+import androidx.room.Room;
+
+import com.example.android_api_eservice.data.db.PokemonDatabase;
+import com.example.android_api_eservice.data.repositories.mapper.PokemonToPokemonEntityMapper;
 import com.example.android_api_eservice.presentation.viewmodel.ViewModelFactory;
 import com.example.android_api_eservice.data.api.PokemonService;
 import com.example.android_api_eservice.data.repositories.PokemonRepository;
@@ -25,6 +29,7 @@ public class FakeDependencyInjection {
     private static Retrofit retrofit;
     private static Gson gson;
     private static PokemonRepository pokemonRepository;
+    private static PokemonDatabase pokemonDatabase;
     private static Context applicationContext;
     private static ViewModelFactory viewModelFactory;
 
@@ -41,8 +46,9 @@ public class FakeDependencyInjection {
     public static PokemonRepository getPokemonRepository() {
         if (pokemonRepository == null) {
             pokemonRepository = new PokemonRepository(
-                    new PokemonLocalDataSource(),
-                    new PokemonRemoteDataSource(getPokemonService())
+                    new PokemonLocalDataSource(getPokemonDatabase()),
+                    new PokemonRemoteDataSource(getPokemonService()),
+                    new PokemonToPokemonEntityMapper()
             );
         }
         return pokemonRepository;
@@ -83,6 +89,14 @@ public class FakeDependencyInjection {
 
     public static void setContext(Context context) {
         applicationContext = context;
+    }
+
+    public static PokemonDatabase getPokemonDatabase() {
+        if (pokemonDatabase == null) {
+            pokemonDatabase = Room.databaseBuilder(applicationContext,
+                    PokemonDatabase.class, "pokemon-database").build();
+        }
+        return pokemonDatabase;
     }
 
 }

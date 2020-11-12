@@ -18,7 +18,9 @@ private final PokemonRepository pokemonRepository;
                 if (modelClass.isAssignableFrom(PokemonsViewModel.class)) {
                         return (T) new PokemonsViewModel(pokemonRepository);
                 }
-                //Handle favorite view model case
+                if (modelClass.isAssignableFrom(PokemonFavoriteViewModel.class)) {
+                        return (T) new PokemonFavoriteViewModel(pokemonRepository);
+                }
                 throw new IllegalArgumentException("Unknown ViewModel class");
         }
 }

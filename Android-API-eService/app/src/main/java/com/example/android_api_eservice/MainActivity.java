@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
+import com.example.android_api_eservice.data.di.FakeDependencyInjection;
 import com.example.android_api_eservice.presentation.pokemon.favorite.fragment.FavoriteFragment;
 import com.example.android_api_eservice.presentation.pokemon.pokedex.fragment.PokedexFragment;
 import com.google.android.material.tabs.TabLayout;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FakeDependencyInjection.setContext(this);
+
         setContentView(R.layout.activity_main);
 
 
