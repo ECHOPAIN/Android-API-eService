@@ -2,8 +2,10 @@ package com.example.android_api_eservice;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -166,38 +168,40 @@ public class PokemonDetail extends AppCompatActivity {
                                                     Math.max(Integer.valueOf(pokemonDetails.getStats().get(3).getBase_stat()),
                                                             Math.max(Integer.valueOf(pokemonDetails.getStats().get(4).getBase_stat()),
                                                                     Integer.valueOf(pokemonDetails.getStats().get(5).getBase_stat()))))));
+
+
         //Hp
-        textViewPokemonHp.setText(pokemonDetails.getStats().get(0).getBase_stat());
-        progressBarPokemonHp.setMax(maxValue);
-        progressBarPokemonHp.setProgress(Integer.valueOf(pokemonDetails.getStats().get(0).getBase_stat()));
+        bindStat(textViewPokemonHp,pokemonDetails.getStats().get(0).getBase_stat(),progressBarPokemonHp,Integer.valueOf(pokemonDetails.getStats().get(0).getBase_stat()),maxValue);
+
 
         //Attack
-        textViewPokemonAttack.setText(pokemonDetails.getStats().get(1).getBase_stat());
-        progressBarPokemonAttack.setMax(maxValue);
-        progressBarPokemonAttack.setProgress(Integer.valueOf(pokemonDetails.getStats().get(1).getBase_stat()));
+        bindStat(textViewPokemonAttack,pokemonDetails.getStats().get(1).getBase_stat(),progressBarPokemonAttack,Integer.valueOf(pokemonDetails.getStats().get(1).getBase_stat()),maxValue);
 
         //Defense
-        textViewPokemonDefense.setText(pokemonDetails.getStats().get(2).getBase_stat());
-        progressBarPokemonDefense.setMax(maxValue);
-        progressBarPokemonDefense.setProgress(Integer.valueOf(pokemonDetails.getStats().get(2).getBase_stat()));
+        bindStat(textViewPokemonDefense,pokemonDetails.getStats().get(2).getBase_stat(),progressBarPokemonDefense,Integer.valueOf(pokemonDetails.getStats().get(2).getBase_stat()),maxValue);
 
         //Special Attack
-        textViewPokemonSpecialAttack.setText(pokemonDetails.getStats().get(3).getBase_stat());
-        progressBarPokemonSpecialAttack.setMax(maxValue);
-        progressBarPokemonSpecialAttack.setProgress(Integer.valueOf(pokemonDetails.getStats().get(3).getBase_stat()));
+        bindStat(textViewPokemonSpecialAttack,pokemonDetails.getStats().get(3).getBase_stat(),progressBarPokemonSpecialAttack,Integer.valueOf(pokemonDetails.getStats().get(3).getBase_stat()),maxValue);
 
         //Special Defense
-        textViewPokemonSpecialDefense.setText(pokemonDetails.getStats().get(4).getBase_stat());
-        progressBarPokemonSpecialDefense.setMax(maxValue);
-        progressBarPokemonSpecialDefense.setProgress(Integer.valueOf(pokemonDetails.getStats().get(4).getBase_stat()));
+        bindStat(textViewPokemonSpecialDefense,pokemonDetails.getStats().get(4).getBase_stat(),progressBarPokemonSpecialDefense,Integer.valueOf(pokemonDetails.getStats().get(4).getBase_stat()),maxValue);
 
         //Speed
-        textViewPokemonSpeed.setText(pokemonDetails.getStats().get(5).getBase_stat());
-        progressBarPokemonSpeed.setMax(maxValue);
-        progressBarPokemonSpeed.setProgress(Integer.valueOf(pokemonDetails.getStats().get(5).getBase_stat()));
+        bindStat(textViewPokemonSpeed,pokemonDetails.getStats().get(5).getBase_stat(),progressBarPokemonSpeed,Integer.valueOf(pokemonDetails.getStats().get(5).getBase_stat()),maxValue);
 
 
         detailLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void bindStat(TextView textView, String baseStat, ProgressBar progressBar, Integer baseStatValue, Integer maxValue) {
+        textView.setText(baseStat);
+        progressBar.setMax(maxValue);
+        progressBar.setProgress(0);
+
+        ObjectAnimator animation = ObjectAnimator.ofInt(progressBar, "progress", progressBar.getProgress(), baseStatValue);
+        animation.setDuration(500);
+        animation.setInterpolator(new DecelerateInterpolator());
+        animation.start();
     }
 
     private void setBackground(LinearLayout linearLayout, String type) {
