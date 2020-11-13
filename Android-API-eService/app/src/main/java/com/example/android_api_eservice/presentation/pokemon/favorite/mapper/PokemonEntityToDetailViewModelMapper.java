@@ -13,6 +13,8 @@ public class PokemonEntityToDetailViewModelMapper {
         pokemonDetailViewModel.setId(pokemonEntity.getId());
         pokemonDetailViewModel.setName(pokemonEntity.getName());
         pokemonDetailViewModel.setFront_default(pokemonEntity.getFront_default());
+        pokemonDetailViewModel.setPrimaryType(pokemonEntity.getPrimaryType());
+        pokemonDetailViewModel.setSecondaryType(pokemonEntity.getSecondaryType());
         return pokemonDetailViewModel;
     }
 

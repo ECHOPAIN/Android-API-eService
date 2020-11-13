@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,31 +59,49 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
 
 
     public static class PokemonDetailViewHolder extends RecyclerView.ViewHolder {
+        private TextView pokemonId;
         private TextView imageName;
+        private TextView pokemonType;
         private ImageView image;
+        private TextView pokemonAtk;
+        private TextView pokemonDef;
+        private TextView pokemonSAtk;
+        private TextView pokemonSDef;
+        private TextView pokemonHp;
+        private TextView pokemonSpd;
+        private TextView pokemonHeight;
+        private TextView pokemonWeight;
         private View v;
         private PokemonDetailViewModel pokemonDetailViewModel;
-        private CheckBox favoriteCheckBox;
+        private ImageButton favoriteTrash;
         private PokemonDetailActionInterface pokemonDetailActionInterface;
 
 
         public PokemonDetailViewHolder(View v, final PokemonDetailActionInterface pokemonDetailActionInterface) {
             super(v);
             this.v = v;
-            imageName = v.findViewById(R.id.image_name);
+            pokemonId = v.findViewById(R.id.pokemon_id);
+            imageName = v.findViewById(R.id.pokemon_name);
+            pokemonType = v.findViewById(R.id.pokemon_type);
             image = v.findViewById(R.id.image);
-            favoriteCheckBox = v.findViewById(R.id.favorite_checkbox);
+            pokemonAtk = v.findViewById(R.id.pokemon_attack_value);
+            pokemonDef = v.findViewById(R.id.pokemon_defense_value);
+            pokemonSAtk = v.findViewById(R.id.pokemon_spatk_value);
+            pokemonSDef = v.findViewById(R.id.pokemon_spdef_value);
+            pokemonHp = v.findViewById(R.id.pokemon_hp_value);
+            pokemonSpd = v.findViewById(R.id.pokemon_speed_value);
+            pokemonHeight = v.findViewById(R.id.pokemon_height_value);
+            pokemonWeight = v.findViewById(R.id.pokemon_weight_value);
+            favoriteTrash = v.findViewById(R.id.favorite_trash);
             setupListeners();
             this.pokemonDetailActionInterface = pokemonDetailActionInterface;
         }
 
         private void setupListeners() {
-            favoriteCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            favoriteTrash.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (!b) {
-                        pokemonDetailActionInterface.onRemoveFavorite(pokemonDetailViewModel.getId());
-                    }
+                public void onClick(View view) {
+                    pokemonDetailActionInterface.onRemoveFavorite(pokemonDetailViewModel.getId());
                 }
             });
         }
@@ -91,7 +110,15 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
 
         void bind(PokemonDetailViewModel pokemonDetailViewModel) {
             this.pokemonDetailViewModel = pokemonDetailViewModel;
-            imageName.setText("#" + pokemonDetailViewModel.getId() + " " + pokemonDetailViewModel.getName());
+            pokemonId.setText("#"+pokemonDetailViewModel.getId());
+            imageName.setText(pokemonDetailViewModel.getName());
+
+            //Types
+            if(pokemonDetailViewModel.getSecondaryType()==null){
+                pokemonType.setText(pokemonDetailViewModel.getPrimaryType().toUpperCase());
+            }else{
+                pokemonType.setText(pokemonDetailViewModel.getPrimaryType().toUpperCase() + " - " + pokemonDetailViewModel.getSecondaryType().toUpperCase());
+            }
             Glide.with(v)
                     .load(pokemonDetailViewModel.getFront_default())
                     .centerCrop()
@@ -99,7 +126,15 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
                     .circleCrop()
                     .into(image);
 
-            favoriteCheckBox.setChecked(true);
+
+            /*pokemonAtk.setText();
+            pokemonDef.setText();
+            pokemonSAtk.setText();
+            pokemonSDef.setText();
+            pokemonHp.setText();
+            pokemonSpd.setText();
+            pokemonHeight.setText();
+            pokemonWeight.setText();*/
         }
 
     }

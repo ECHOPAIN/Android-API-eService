@@ -110,7 +110,6 @@ import java.util.List;
                     .load(pokemonViewItem.getFront_default())
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .circleCrop()
                     .into(image);
 
             favoriteCheckBox.setChecked(pokemonViewItem.isFavorite());

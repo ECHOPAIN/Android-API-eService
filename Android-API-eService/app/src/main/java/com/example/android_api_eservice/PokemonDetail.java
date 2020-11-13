@@ -129,7 +129,6 @@ public class PokemonDetail extends AppCompatActivity {
                 .load(pokemonDetails.getSprites().getFront_default())
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .circleCrop()
                 .into(imageView);
 
 

@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -89,7 +90,7 @@ public class FavoriteFragment extends Fragment implements PokemonDetailActionInt
         recyclerView = view.findViewById(R.id.recycler_view);
         pokemonAdapter = new PokemonDetailAdapter(this);
         recyclerView.setAdapter(pokemonAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(),2, LinearLayoutManager.VERTICAL,false));
     }
 
     @Override
