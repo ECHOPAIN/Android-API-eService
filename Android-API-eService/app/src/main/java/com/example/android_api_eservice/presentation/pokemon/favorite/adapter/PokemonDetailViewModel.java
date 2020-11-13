@@ -10,6 +10,78 @@ public class PokemonDetailViewModel {
     private String front_default;
     private String primaryType;
     private String secondaryType;
+    private String attackValue;
+    private String defenseValue;
+    private String specialAttackValue;
+    private String specialDefenseValue;
+    private String hpValue;
+    private String speedValue;
+    private String height;
+    private String weight;
+
+    public String getAttackValue() {
+        return attackValue;
+    }
+
+    public void setAttackValue(String attackValue) {
+        this.attackValue = attackValue;
+    }
+
+    public String getDefenseValue() {
+        return defenseValue;
+    }
+
+    public void setDefenseValue(String defenseValue) {
+        this.defenseValue = defenseValue;
+    }
+
+    public String getSpecialAttackValue() {
+        return specialAttackValue;
+    }
+
+    public void setSpecialAttackValue(String specialAttackValue) {
+        this.specialAttackValue = specialAttackValue;
+    }
+
+    public String getSpecialDefenseValue() {
+        return specialDefenseValue;
+    }
+
+    public void setSpecialDefenseValue(String specialDefenseValue) {
+        this.specialDefenseValue = specialDefenseValue;
+    }
+
+    public String getHpValue() {
+        return hpValue;
+    }
+
+    public void setHpValue(String hpValue) {
+        this.hpValue = hpValue;
+    }
+
+    public String getSpeedValue() {
+        return speedValue;
+    }
+
+    public void setSpeedValue(String speedValue) {
+        this.speedValue = speedValue;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
 
     public String getPrimaryType() {
         return primaryType;

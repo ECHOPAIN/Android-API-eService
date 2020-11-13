@@ -110,8 +110,14 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
 
         void bind(PokemonDetailViewModel pokemonDetailViewModel) {
             this.pokemonDetailViewModel = pokemonDetailViewModel;
+
+            //Id
             pokemonId.setText("#"+pokemonDetailViewModel.getId());
-            imageName.setText(pokemonDetailViewModel.getName());
+
+            //Name
+            String name = pokemonDetailViewModel.getName();
+            name = name.substring(0, 1).toUpperCase() + name.substring(1);
+            imageName.setText(name);
 
             //Types
             if(pokemonDetailViewModel.getSecondaryType()==null){
@@ -119,6 +125,8 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
             }else{
                 pokemonType.setText(pokemonDetailViewModel.getPrimaryType().toUpperCase() + " - " + pokemonDetailViewModel.getSecondaryType().toUpperCase());
             }
+
+            //Image
             Glide.with(v)
                     .load(pokemonDetailViewModel.getFront_default())
                     .centerCrop()
@@ -126,15 +134,29 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
                     .circleCrop()
                     .into(image);
 
+            //Stats
+            pokemonAtk.setText(pokemonDetailViewModel.getAttackValue());
+            pokemonDef.setText(pokemonDetailViewModel.getDefenseValue());
+            pokemonSAtk.setText(pokemonDetailViewModel.getSpecialAttackValue());
+            pokemonSDef.setText(pokemonDetailViewModel.getSpecialDefenseValue());
+            pokemonHp.setText(pokemonDetailViewModel.getHpValue());
+            pokemonSpd.setText(pokemonDetailViewModel.getSpeedValue());
 
-            /*pokemonAtk.setText();
-            pokemonDef.setText();
-            pokemonSAtk.setText();
-            pokemonSDef.setText();
-            pokemonHp.setText();
-            pokemonSpd.setText();
-            pokemonHeight.setText();
-            pokemonWeight.setText();*/
+            //Height
+            String height = pokemonDetailViewModel.getHeight();
+            if(height.length()<=1){
+                height=0+height;
+            }
+            height=height.substring(0,height.length()-1)+"."+height.substring(height.length()-1,height.length());
+            pokemonHeight.setText(height+"m");
+
+            //Weight
+            String weight = pokemonDetailViewModel.getWeight();
+            if(weight.length()<=1){
+                weight=0+weight;
+            }
+            weight=weight.substring(0,weight.length()-1)+"."+weight.substring(weight.length()-1,weight.length());
+            pokemonWeight.setText(weight+"kg");
         }
 
     }

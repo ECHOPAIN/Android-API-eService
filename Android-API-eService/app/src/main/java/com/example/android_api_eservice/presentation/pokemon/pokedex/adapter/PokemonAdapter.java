@@ -105,13 +105,21 @@ import java.util.List;
 
         void bind(PokemonViewItem pokemonViewItem) {
             this.pokemonViewItem = pokemonViewItem;
-            imageName.setText("#" + pokemonViewItem.getId() + " " + pokemonViewItem.getName());
+
+            //Id + Name
+            String name = pokemonViewItem.getName();
+            name = name.substring(0, 1).toUpperCase() + name.substring(1);
+            imageName.setText(name);
+            imageName.setText("#" + pokemonViewItem.getId() + " " + name);
+
+            //Image
             Glide.with(v)
                     .load(pokemonViewItem.getFront_default())
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(image);
 
+            //Favorite CheckBox
             favoriteCheckBox.setChecked(pokemonViewItem.isFavorite());
         }
 

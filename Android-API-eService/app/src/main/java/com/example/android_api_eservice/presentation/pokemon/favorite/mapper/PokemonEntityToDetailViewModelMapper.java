@@ -15,6 +15,14 @@ public class PokemonEntityToDetailViewModelMapper {
         pokemonDetailViewModel.setFront_default(pokemonEntity.getFront_default());
         pokemonDetailViewModel.setPrimaryType(pokemonEntity.getPrimaryType());
         pokemonDetailViewModel.setSecondaryType(pokemonEntity.getSecondaryType());
+        pokemonDetailViewModel.setAttackValue(pokemonEntity.getAttackValue());
+        pokemonDetailViewModel.setDefenseValue(pokemonEntity.getDefenseValue());
+        pokemonDetailViewModel.setSpecialAttackValue(pokemonEntity.getSpecialAttackValue());
+        pokemonDetailViewModel.setSpecialDefenseValue(pokemonEntity.getSpecialDefenseValue());
+        pokemonDetailViewModel.setHpValue(pokemonEntity.getHpValue());
+        pokemonDetailViewModel.setSpeedValue(pokemonEntity.getSpeedValue());
+        pokemonDetailViewModel.setHeight(pokemonEntity.getHeight());
+        pokemonDetailViewModel.setWeight(pokemonEntity.getWeight());
         return pokemonDetailViewModel;
     }
 

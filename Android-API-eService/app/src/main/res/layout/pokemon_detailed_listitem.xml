@@ -70,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="15dp"
+                    android:textSize="12dp"
                     android:gravity="center"
                     android:text="NORMAL"
                     android:id="@+id/pokemon_type"/>
@@ -99,6 +99,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="0"
                             android:id="@+id/pokemon_attack_value"/>
 
@@ -106,12 +107,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="Atk"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="0"
                             android:id="@+id/pokemon_hp_value"/>
 
@@ -119,6 +122,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="Hp"/>
 
                     </LinearLayout>
@@ -133,6 +137,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="0"
                             android:id="@+id/pokemon_defense_value"/>
 
@@ -140,12 +145,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="Def"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="0"
                             android:id="@+id/pokemon_speed_value"/>
 
@@ -153,6 +160,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="Spd"/>
 
                     </LinearLayout>
@@ -161,12 +169,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:textSize="10dp"
                         android:layout_weight="1">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="0"
                             android:id="@+id/pokemon_spatk_value"/>
 
@@ -174,12 +184,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="S. Atk"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="0"
                             android:id="@+id/pokemon_height_value"/>
 
@@ -187,6 +199,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="Height"/>
 
                     </LinearLayout>
@@ -195,12 +208,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:textSize="10dp"
                         android:layout_weight="1">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="0"
                             android:id="@+id/pokemon_spdef_value"/>
 
@@ -208,12 +223,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="S. Def"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="0"
                             android:id="@+id/pokemon_weight_value"/>
 
@@ -221,6 +238,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="10dp"
                             android:text="Weight"/>
 
                     </LinearLayout>
