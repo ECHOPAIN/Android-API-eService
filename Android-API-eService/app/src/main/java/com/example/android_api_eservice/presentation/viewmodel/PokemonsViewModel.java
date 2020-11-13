@@ -83,4 +83,13 @@ public class PokemonsViewModel extends ViewModel {
                 }));
     }
 
+    public void removePokemonFromFavorites(String pokemonId) {
+        List<PokemonViewItem> pokemonsTmp = getPokemons().getValue();
+        for(PokemonViewItem pokemon: pokemonsTmp){
+            if(pokemon.getId().equals(pokemonId)){
+                pokemon.setFavorite(false);
+            }
+        }
+        pokemons.setValue(pokemonsTmp);
+    }
 }

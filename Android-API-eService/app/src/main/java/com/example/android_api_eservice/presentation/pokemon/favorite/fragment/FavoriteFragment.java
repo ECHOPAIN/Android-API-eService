@@ -19,6 +19,7 @@ import com.example.android_api_eservice.presentation.pokemon.favorite.adapter.Po
 import com.example.android_api_eservice.presentation.pokemon.favorite.adapter.PokemonDetailViewModel;
 import com.example.android_api_eservice.presentation.viewmodel.Event;
 import com.example.android_api_eservice.presentation.viewmodel.PokemonFavoriteViewModel;
+import com.example.android_api_eservice.presentation.viewmodel.PokemonsViewModel;
 
 import java.util.List;
 
@@ -28,12 +29,13 @@ public class FavoriteFragment extends Fragment implements PokemonDetailActionInt
     private RecyclerView recyclerView;
     private PokemonDetailAdapter pokemonAdapter;
     private PokemonFavoriteViewModel pokemonFavoriteViewModel;
-
-
+    private PokemonsViewModel pokemonsViewModel;
 
     public FavoriteFragment() {
         // Required empty public constructor
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,6 @@ public class FavoriteFragment extends Fragment implements PokemonDetailActionInt
 
 
 
-    //------------------
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -60,7 +61,7 @@ public class FavoriteFragment extends Fragment implements PokemonDetailActionInt
 
     private void registerViewModels() {
         pokemonFavoriteViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(PokemonFavoriteViewModel.class);
-        System.out.println("FVVM is " + pokemonFavoriteViewModel);
+        pokemonsViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(PokemonsViewModel.class);
 
         pokemonFavoriteViewModel.getFavorites().observe(getViewLifecycleOwner(), new Observer<List<PokemonDetailViewModel>>() {
             @Override
@@ -94,6 +95,7 @@ public class FavoriteFragment extends Fragment implements PokemonDetailActionInt
     @Override
     public void onRemoveFavorite(String pokemonId) {
         pokemonFavoriteViewModel.removePokemonFromFavorites(pokemonId);
+        pokemonsViewModel.removePokemonFromFavorites(pokemonId);
     }
 
 }

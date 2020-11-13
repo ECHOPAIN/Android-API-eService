@@ -84,7 +84,6 @@ public class PokemonFavoriteViewModel extends ViewModel {
                         public void onNext(List<PokemonEntity> pokemonEntityList) {
                             isDataLoading.setValue(false);
                             favorites.setValue(pokemonEntityToDetailViewModelMapper.map(pokemonEntityList));
-                            System.out.println("BIND FAVORITES");
                         }
 
                         @Override

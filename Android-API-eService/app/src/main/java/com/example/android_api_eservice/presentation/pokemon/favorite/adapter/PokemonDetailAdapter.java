@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.android_api_eservice.R;
-import com.example.android_api_eservice.presentation.pokemon.favorite.fragment.FavoriteFragment;
+import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonActionInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,6 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
 
     private List<PokemonDetailViewModel> pokemonDetailViewModelList;
     private PokemonDetailActionInterface pokemonDetailActionInterface;
-
     public PokemonDetailAdapter(PokemonDetailActionInterface pokemonDetailActionInterface) {
         pokemonDetailViewModelList = new ArrayList<>();
         this.pokemonDetailActionInterface = pokemonDetailActionInterface;
