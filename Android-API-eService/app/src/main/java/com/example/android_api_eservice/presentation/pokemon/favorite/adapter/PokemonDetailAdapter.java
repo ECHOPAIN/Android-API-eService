@@ -1,21 +1,21 @@
 package com.example.android_api_eservice.presentation.pokemon.favorite.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.android_api_eservice.R;
-import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonActionInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
     public PokemonDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.pokemon_detailed_listitem, parent, false);
+                .inflate(R.layout.pokemon_favorit_list_item, parent, false);
         PokemonDetailViewHolder pokemonDetailViewHolder = new PokemonDetailViewHolder(v, pokemonDetailActionInterface);
         return pokemonDetailViewHolder;
     }
@@ -71,6 +71,7 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
         private TextView pokemonSpd;
         private TextView pokemonHeight;
         private TextView pokemonWeight;
+        private CardView cardView;
         private View v;
         private PokemonDetailViewModel pokemonDetailViewModel;
         private ImageButton favoriteTrash;
@@ -80,6 +81,7 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
         public PokemonDetailViewHolder(View v, final PokemonDetailActionInterface pokemonDetailActionInterface) {
             super(v);
             this.v = v;
+            cardView = v.findViewById(R.id.parent_layout);
             pokemonId = v.findViewById(R.id.pokemon_id);
             imageName = v.findViewById(R.id.pokemon_name);
             pokemonType = v.findViewById(R.id.pokemon_type);
@@ -125,6 +127,9 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
             }else{
                 pokemonType.setText(pokemonDetailViewModel.getPrimaryType().toUpperCase() + " - " + pokemonDetailViewModel.getSecondaryType().toUpperCase());
             }
+            int color = getColorFromType(v.getContext(),pokemonDetailViewModel.getPrimaryType());
+            int transparency = 0XAA000000;
+            cardView.setCardBackgroundColor(color+transparency);
 
             //Image
             Glide.with(v)
@@ -157,6 +162,51 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
             }
             weight=weight.substring(0,weight.length()-1)+"."+weight.substring(weight.length()-1,weight.length());
             pokemonWeight.setText(weight+"kg");
+        }
+
+
+        private int getColorFromType(Context context, String primaryType) {
+            switch(primaryType.toLowerCase()) {
+                case "normal":
+                    return  ContextCompat.getColor(context,R.color.normal);
+                case "fighting":
+                    return ContextCompat.getColor(context,R.color.fighting);
+                case "poison":
+                    return ContextCompat.getColor(context,R.color.poison);
+                case "ground":
+                    return ContextCompat.getColor(context,R.color.ground);
+                case "rock":
+                    return ContextCompat.getColor(context,R.color.rock);
+                case "bug":
+                    return ContextCompat.getColor(context,R.color.bug);
+                case "ghost":
+                    return ContextCompat.getColor(context,R.color.ghost);
+                case "steel":
+                    return ContextCompat.getColor(context,R.color.steel);
+                case "fire":
+                    return ContextCompat.getColor(context,R.color.fire);
+                case "water":
+                    return ContextCompat.getColor(context,R.color.water);
+                case "grass":
+                    return ContextCompat.getColor(context,R.color.grass);
+                case "electric":
+                    return ContextCompat.getColor(context,R.color.electric);
+                case "psychic":
+                    return ContextCompat.getColor(context,R.color.psychic);
+                case "ice":
+                    return ContextCompat.getColor(context,R.color.ice);
+                case "dragon":
+                    return ContextCompat.getColor(context,R.color.dragon);
+                case "dark":
+                    return ContextCompat.getColor(context,R.color.dark);
+                case "fairy":
+                    return ContextCompat.getColor(context,R.color.fairy);
+                case "flying":
+                    return ContextCompat.getColor(context,R.color.flying);
+
+                default:
+                    return ContextCompat.getColor(context,R.color.normal);
+            }
         }
 
     }
