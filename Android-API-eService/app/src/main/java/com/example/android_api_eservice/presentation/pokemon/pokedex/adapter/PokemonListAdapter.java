@@ -20,13 +20,13 @@ import com.example.android_api_eservice.R;
 import java.util.ArrayList;
 import java.util.List;
 
-    public class PokemonAdapter  extends RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder> {
+    public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonViewHolder> {
     private List<PokemonViewItem> pokemonViewItemList;
     private PokemonActionInterface pokemonActionInterface;
 
 
     // Provide a suitable constructor
-    public PokemonAdapter(PokemonActionInterface pokemonActionInterface) {
+    public PokemonListAdapter(PokemonActionInterface pokemonActionInterface) {
         pokemonViewItemList = new ArrayList<>();
         this.pokemonActionInterface = pokemonActionInterface;
     }
@@ -43,7 +43,7 @@ import java.util.List;
                                              int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.pokemon_listitem, parent, false);
+                .inflate(R.layout.pokedex_list_item, parent, false);
         PokemonViewHolder pokemonViewHolder = new PokemonViewHolder(v, pokemonActionInterface);
         return pokemonViewHolder;
     }
@@ -84,7 +84,7 @@ import java.util.List;
         public PokemonViewHolder(View v, final PokemonActionInterface pokemonActionInterface) {
             super(v);
             this.v = v;
-            imageName = v.findViewById(R.id.image_name);
+            imageName = v.findViewById(R.id.pokemon_name);
             image = v.findViewById(R.id.image);
             parentLayout = itemView.findViewById(R.id.parent_layout);
             favoriteCheckBox = v.findViewById(R.id.favorite_checkbox);

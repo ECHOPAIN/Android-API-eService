@@ -15,11 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.android_api_eservice.data.di.FakeDependencyInjection;
 import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonActionInterface;
-import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonAdapter;
+import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonGridAdapter;
+import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonListAdapter;
 import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonViewItem;
 import com.example.android_api_eservice.R;
 import com.example.android_api_eservice.presentation.viewmodel.PokemonFavoriteViewModel;
@@ -34,8 +34,10 @@ public class PokedexFragment extends Fragment implements PokemonActionInterface 
     private ProgressBar progressBar;
     private PokemonsViewModel pokemonsViewModel;
     private View view;
-    private PokemonAdapter pokemonAdapter;
+    private PokemonListAdapter pokemonListAdapter;
+    private PokemonGridAdapter pokemonGridAdapter;
     final RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+    final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3, LinearLayoutManager.VERTICAL,false);
     private PokemonFavoriteViewModel pokemonFavoriteViewModel;
 
     public PokedexFragment() {
@@ -48,25 +50,20 @@ public class PokedexFragment extends Fragment implements PokemonActionInterface 
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.fragment_pokedex, container, false);
 
-
-
-        //Setting up FAB (gridview and linearview)
         fab = view.findViewById(R.id.fab);
-        recyclerView = view.findViewById(R.id.recycler_view);
-
-        // set a GridLayoutManager with 3 number of columns , vertical gravity and false value for reverseLayout to show the items from start to end
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(),3, LinearLayoutManager.VERTICAL,false);
-        recyclerView.setLayoutManager(linearLayoutManager);
 
 
+        //Hangle gridView / listView change
         fab.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
                 if (recyclerView.getLayoutManager().equals(gridLayoutManager)) {
+                    recyclerView.setAdapter(pokemonListAdapter);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     fab.setImageResource(R.drawable.grid_display);
                 }else{
+                    recyclerView.setAdapter(pokemonGridAdapter);
                     recyclerView.setLayoutManager(gridLayoutManager);
                     fab.setImageResource(R.drawable.list_display);
                 }
@@ -93,7 +90,8 @@ public class PokedexFragment extends Fragment implements PokemonActionInterface 
         pokemonsViewModel.getPokemons().observe(getViewLifecycleOwner(), new Observer<List<PokemonViewItem>>() {
             @Override
             public void onChanged(List<PokemonViewItem> pokemonViewItems) {
-                pokemonAdapter.bindViewModels(pokemonViewItems);
+                pokemonListAdapter.bindViewModels(pokemonViewItems);
+                pokemonGridAdapter.bindViewModels(pokemonViewItems);
             }
         });
 
@@ -107,8 +105,9 @@ public class PokedexFragment extends Fragment implements PokemonActionInterface 
 
     private void setupRecyclerView() {
         recyclerView = view.findViewById(R.id.recycler_view);
-        pokemonAdapter = new PokemonAdapter(this);
-        recyclerView.setAdapter(pokemonAdapter);
+        pokemonListAdapter = new PokemonListAdapter(this);
+        pokemonGridAdapter = new PokemonGridAdapter(this);
+        recyclerView.setAdapter(pokemonListAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //if we reach the bottom of the recyclerview we should load more pokemons
@@ -116,7 +115,6 @@ public class PokedexFragment extends Fragment implements PokemonActionInterface 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-
                 if (!recyclerView.canScrollVertically(1)) {
                     pokemonsViewModel.loadMorePokemons();
                 }

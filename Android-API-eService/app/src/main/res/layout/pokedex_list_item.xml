@@ -19,7 +19,7 @@
         android:textColor="#000"
         android:textSize="17dp"
         android:text="MissingNo"
-        android:id="@+id/image_name"/>
+        android:id="@+id/pokemon_name"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -28,10 +28,9 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleX="0.40"
-            android:scaleY="0.40"
             android:layout_alignParentRight="true"
-            android:button="@drawable/custom_favorite_checkbox"
+            android:button="@null"
+            android:background="@drawable/custom_favorite_checkbox"
             android:id="@+id/favorite_checkbox"/>
         </RelativeLayout>
 
