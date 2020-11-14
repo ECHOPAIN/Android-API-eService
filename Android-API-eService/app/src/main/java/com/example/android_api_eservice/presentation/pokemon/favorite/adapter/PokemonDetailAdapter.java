@@ -1,6 +1,7 @@
 package com.example.android_api_eservice.presentation.pokemon.favorite.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.example.android_api_eservice.PokemonDetail;
 import com.example.android_api_eservice.R;
 
 import java.util.ArrayList;
@@ -48,8 +50,19 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PokemonDetailViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PokemonDetailViewHolder holder, final int position) {
         holder.bind(pokemonDetailViewModelList.get(position));
+
+        //open PokemonDetail activity
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(view.getContext(), pokemonViewItemList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), PokemonDetail.class);
+                intent.putExtra("pokemonId",pokemonDetailViewModelList.get(position).getId());
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
