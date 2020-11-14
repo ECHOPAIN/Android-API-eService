@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -73,18 +73,20 @@ import java.util.List;
 
 
     public static class PokemonViewHolder extends RecyclerView.ViewHolder {
-        private TextView imageName;
+        private TextView pokemonId;
+        private TextView pokemonName;
         private ImageView image;
         private View v;
         private CheckBox favoriteCheckBox;
         private PokemonActionInterface pokemonActionInterface;
         private PokemonViewItem pokemonViewItem;
-        LinearLayout parentLayout;
+        CardView parentLayout;
 
         public PokemonViewHolder(View v, final PokemonActionInterface pokemonActionInterface) {
             super(v);
             this.v = v;
-            imageName = v.findViewById(R.id.pokemon_name);
+            pokemonId = v.findViewById((R.id.pokemon_id));
+            pokemonName = v.findViewById(R.id.pokemon_name);
             image = v.findViewById(R.id.image);
             parentLayout = itemView.findViewById(R.id.parent_layout);
             favoriteCheckBox = v.findViewById(R.id.favorite_checkbox);
@@ -106,11 +108,14 @@ import java.util.List;
         void bind(PokemonViewItem pokemonViewItem) {
             this.pokemonViewItem = pokemonViewItem;
 
-            //Id + Name
+            //Id
+            pokemonId.setText("#" + pokemonViewItem.getId());
+
+            //Name
             String name = pokemonViewItem.getName();
             name = name.substring(0, 1).toUpperCase() + name.substring(1);
-            imageName.setText(name);
-            imageName.setText("#" + pokemonViewItem.getId() + " " + name);
+            pokemonName.setText(name);
+            pokemonName.setText(name);
 
             //Image
             Glide.with(v)
