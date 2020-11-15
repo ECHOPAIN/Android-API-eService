@@ -22,45 +22,13 @@ public class PokemonDetails {
     private String weight;
 
 
-    public List<Abilities> getAbilities() {
-        return abilities;
-    }
+    public List<Abilities> getAbilities() { return abilities; }
 
-    public void setAbilities(List<Abilities> abilities) {
-        this.abilities = abilities;
-    }
+    public void setAbilities(List<Abilities> abilities) { this.abilities = abilities; }
 
-    public List<Stats> getStats() {
-        return stats;
-    }
+    public String getBase_experience() { return base_experience; }
 
-    public void setStats(List<Stats> stats) {
-        this.stats = stats;
-    }
-
-    public List<Types> getTypes() {
-        return types;
-    }
-
-    public void setTypes(List<Types> types) {
-        this.types = types;
-    }
-
-    public Sprites getSprites() {
-        return sprites;
-    }
-
-    public void setSprites(Sprites sprites) {
-        this.sprites = sprites;
-    }
-
-    public String getBase_experience() {
-        return base_experience;
-    }
-
-    public void setBase_experience(String base_experience) {
-        this.base_experience = base_experience;
-    }
+    public void setBase_experience(String base_experience) { this.base_experience = base_experience; }
 
     public String getHeight() {
         return height;
@@ -90,9 +58,7 @@ public class PokemonDetails {
         return location_area_encounters;
     }
 
-    public void setLocation_area_encounters(String location_area_encounters) {
-        this.location_area_encounters = location_area_encounters;
-    }
+    public void setLocation_area_encounters(String location_area_encounters) { this.location_area_encounters = location_area_encounters; }
 
     public String getName() {
         return name;
@@ -108,6 +74,28 @@ public class PokemonDetails {
 
     public void setOrder(String order) {
         this.order = order;
+    }
+
+    public Sprites getSprites() {
+        return sprites;
+    }
+
+    public void setSprites(Sprites sprites) { this.sprites = sprites; }
+
+    public List<Stats> getStats() {
+        return stats;
+    }
+
+    public void setStats(List<Stats> stats) {
+        this.stats = stats;
+    }
+
+    public List<Types> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<Types> types) {
+        this.types = types;
     }
 
     public String getWeight() {

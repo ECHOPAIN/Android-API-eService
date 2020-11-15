@@ -15,8 +15,8 @@ private final PokemonRepository pokemonRepository;
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
-                if (modelClass.isAssignableFrom(PokemonsViewModel.class)) {
-                        return (T) new PokemonsViewModel(pokemonRepository);
+                if (modelClass.isAssignableFrom(PokemonPokedexViewModel.class)) {
+                        return (T) new PokemonPokedexViewModel(pokemonRepository);
                 }
                 if (modelClass.isAssignableFrom(PokemonFavoriteViewModel.class)) {
                         return (T) new PokemonFavoriteViewModel(pokemonRepository);

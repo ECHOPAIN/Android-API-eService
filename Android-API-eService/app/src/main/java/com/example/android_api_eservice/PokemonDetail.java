@@ -1,7 +1,6 @@
 package com.example.android_api_eservice;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -13,24 +12,18 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.android_api_eservice.data.api.model.Abilities;
-import com.example.android_api_eservice.data.api.model.Ability;
 import com.example.android_api_eservice.data.api.model.PokemonDetails;
 import com.example.android_api_eservice.data.di.FakeDependencyInjection;
 import com.example.android_api_eservice.data.repositories.PokemonRepository;
-
-import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class PokemonDetail extends AppCompatActivity {
-
     private TextView textViewPokemonName;
     private TextView textViewPokemonId;
     private ImageView imageView;
@@ -51,8 +44,6 @@ public class PokemonDetail extends AppCompatActivity {
     private TextView textViewBackMale;
     private TextView textViewShinyFrontMale;
     private TextView textViewShinyBackMale;
-    private TextView textViewPokemonHeight;
-    private TextView textViewPokemonWeight;
     private TextView textViewPokemonHp;
     private TextView textViewPokemonAttack;
     private TextView textViewPokemonDefense;
@@ -75,6 +66,7 @@ public class PokemonDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon_detail);
+        pokemonRepository = FakeDependencyInjection.getPokemonRepository();
 
         textViewPokemonName = findViewById(R.id.pokemon_detail_name);
         textViewPokemonId = findViewById(R.id.pokemon_detail_id);
@@ -96,8 +88,6 @@ public class PokemonDetail extends AppCompatActivity {
         textViewBackMale = findViewById(R.id.pokemon_detail_back_default_male_text);
         textViewShinyFrontMale = findViewById(R.id.pokemon_detail_front_shiny_male_text);
         textViewShinyBackMale = findViewById(R.id.pokemon_detail_back_shiny_male_text);
-        //textViewPokemonHeight = findViewById(R.id.pokemon_detail_height);
-        //textViewPokemonWeight = findViewById(R.id.pokemon_detail_weight);
         textViewPokemonHp = findViewById(R.id.pokemon_detail_hp_value);
         textViewPokemonAttack = findViewById(R.id.pokemon_detail_attack_value);
         textViewPokemonDefense = findViewById(R.id.pokemon_detail_defense_value);
@@ -114,27 +104,20 @@ public class PokemonDetail extends AppCompatActivity {
         progressBar = findViewById(R.id.pokemon_detail_progress_bar);
         abilitiesLayout = findViewById(R.id.pokemon_detail_abilities_layout);
 
-        pokemonRepository = FakeDependencyInjection.getPokemonRepository();
-
-
-
         fetchAndDisplayPokemonDetails();
     }
 
     private void fetchAndDisplayPokemonDetails() {
-
         detailLayout.setVisibility(View.GONE);
-
         if(getIntent().hasExtra("pokemonId")) {
             String pokemonId = getIntent().getStringExtra(("pokemonId"));
-
             progressBar.setVisibility(View.VISIBLE);
-
             compositeDisposable.clear();
             compositeDisposable.add(pokemonRepository.getPokemonDetail(pokemonId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableSingleObserver<PokemonDetails>() {
+
                         @Override
                         public void onSuccess(PokemonDetails requestPokemonDetails) {
                             PokemonDetails pokemonDetails = requestPokemonDetails;
@@ -156,7 +139,6 @@ public class PokemonDetail extends AppCompatActivity {
     }
 
     private void bind(PokemonDetails pokemonDetails) {
-
         //Name
         String name = pokemonDetails.getName();
         name = name.substring(0, 1).toUpperCase() + name.substring(1);
@@ -172,34 +154,14 @@ public class PokemonDetail extends AppCompatActivity {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
 
-
         //Types
         if(pokemonDetails.getTypes().size()==1){
             textViewPokemonType.setText(pokemonDetails.getTypes().get(0).getType().getName().toUpperCase());
         }else{
             textViewPokemonType.setText(pokemonDetails.getTypes().get(0).getType().getName().toUpperCase() + " - " + pokemonDetails.getTypes().get(1).getType().getName().toUpperCase());
         }
-
         //set the background according to the primary type
         setBackground(detailLayout,pokemonDetails.getTypes().get(0).getType().getName());
-
-        /*
-        //Height
-        String height = pokemonDetails.getHeight();
-        if(height.length()<=1){
-            height=0+height;
-        }
-        height=height.substring(0,height.length()-1)+"."+height.substring(height.length()-1,height.length());
-        textViewPokemonHeight.setText("Height : "+height+"m");
-
-        //Weight
-        String weight = pokemonDetails.getWeight();
-        if(weight.length()<=1){
-            weight=0+weight;
-        }
-        weight=weight.substring(0,weight.length()-1)+"."+weight.substring(weight.length()-1,weight.length());
-        textViewPokemonWeight.setText("Weight : "+weight+"kg");*/
-
 
         //Stats
         Integer maxValue = Math.max(Integer.valueOf(pokemonDetails.getStats().get(0).getBase_stat()),
@@ -212,7 +174,6 @@ public class PokemonDetail extends AppCompatActivity {
 
         //Hp
         bindStat(textViewPokemonHp,pokemonDetails.getStats().get(0).getBase_stat(),progressBarPokemonHp,Integer.valueOf(pokemonDetails.getStats().get(0).getBase_stat()),maxValue);
-
 
         //Attack
         bindStat(textViewPokemonAttack,pokemonDetails.getStats().get(1).getBase_stat(),progressBarPokemonAttack,Integer.valueOf(pokemonDetails.getStats().get(1).getBase_stat()),maxValue);
@@ -253,6 +214,7 @@ public class PokemonDetail extends AppCompatActivity {
                 .load(pokemonDetails.getSprites().getBack_shiny())
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageViewBackShiny);
+
         if(differenceBetweenGender) {
             Glide.with(this)
                     .load(pokemonDetails.getSprites().getFront_female())
@@ -283,7 +245,6 @@ public class PokemonDetail extends AppCompatActivity {
             textViewShinyFrontMale.setText("Male/Female");
             textViewShinyBackMale.setText("Male/Female");
         }
-
 
         detailLayout.setVisibility(View.VISIBLE);
     }
@@ -316,7 +277,6 @@ public class PokemonDetail extends AppCompatActivity {
 
         relativeLayout.addView(textView);
 
-
         abilitiesLayout.addView(relativeLayout);
     }
 
@@ -325,6 +285,7 @@ public class PokemonDetail extends AppCompatActivity {
         progressBar.setMax(maxValue);
         progressBar.setProgress(0);
 
+        //ProgressBar Animation
         ObjectAnimator animation = ObjectAnimator.ofInt(progressBar, "progress", progressBar.getProgress(), baseStatValue);
         animation.setDuration(500);
         animation.setInterpolator(new DecelerateInterpolator());

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.android_api_eservice.presentation.pokemon.pokedex.mapper.PokemonToViewModelMapper;
-import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonViewItem;
+import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonViewModel;
 import com.example.android_api_eservice.data.api.model.PokemonSearchResponse;
 import com.example.android_api_eservice.data.repositories.PokemonRepository;
 
@@ -16,24 +16,23 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class PokemonsViewModel extends ViewModel {
+public class PokemonPokedexViewModel extends ViewModel {
     private final int MAX_POKEMON=151;
     private final int MAX_POKEMON_PER_CALL=18;
     private PokemonRepository pokemonRepository;
     private CompositeDisposable compositeDisposable;
     private PokemonToViewModelMapper pokemonToViewModelMapper;
-    private MutableLiveData<List<PokemonViewItem>> pokemons = new MutableLiveData<List<PokemonViewItem>>();
+    private MutableLiveData<List<PokemonViewModel>> pokemons = new MutableLiveData<List<PokemonViewModel>>();
     private MutableLiveData<Boolean> isDataLoading = new MutableLiveData<Boolean>();
 
-    public PokemonsViewModel(PokemonRepository pokemonRepository) {
+    public PokemonPokedexViewModel(PokemonRepository pokemonRepository) {
         this.pokemonRepository = pokemonRepository;
         this.compositeDisposable = new CompositeDisposable();
         this.pokemonToViewModelMapper = new PokemonToViewModelMapper();
         loadMorePokemons();
     }
 
-
-    public MutableLiveData<List<PokemonViewItem>> getPokemons() {
+    public MutableLiveData<List<PokemonViewModel>> getPokemons() {
         return pokemons;
     }
     public MutableLiveData<Boolean> getIsDataLoading() {
@@ -51,10 +50,11 @@ public class PokemonsViewModel extends ViewModel {
                 offset=getPokemons().getValue().size();
             }
         }
-
         limit = Math.min(MAX_POKEMON_PER_CALL,MAX_POKEMON-offset);
+        loadMorePokemons(offset,limit);
+    }
 
-
+    private void loadMorePokemons(int offset, int limit) {
         isDataLoading.setValue(true);
         compositeDisposable.clear();
         compositeDisposable.add(pokemonRepository.getPokemons(String.valueOf(offset),String.valueOf(limit))
@@ -63,7 +63,7 @@ public class PokemonsViewModel extends ViewModel {
                 .subscribeWith(new DisposableSingleObserver<PokemonSearchResponse>() {
                     @Override
                     public void onSuccess(PokemonSearchResponse pokemonSearchResponse) {
-                        List<PokemonViewItem> pokemonsTmp = new ArrayList<>();
+                        List<PokemonViewModel> pokemonsTmp = new ArrayList<>();
                         if(getPokemons().getValue()!=null){
                             pokemonsTmp.addAll(getPokemons().getValue());
                         }
@@ -84,8 +84,8 @@ public class PokemonsViewModel extends ViewModel {
     }
 
     public void removePokemonFromFavorites(String pokemonId) {
-        List<PokemonViewItem> pokemonsTmp = getPokemons().getValue();
-        for(PokemonViewItem pokemon: pokemonsTmp){
+        List<PokemonViewModel> pokemonsTmp = getPokemons().getValue();
+        for(PokemonViewModel pokemon: pokemonsTmp){
             if(pokemon.getId().equals(pokemonId)){
                 pokemon.setFavorite(false);
             }

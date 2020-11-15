@@ -2,7 +2,6 @@ package com.example.android_api_eservice.presentation.pokemon.favorite.mapper;
 
 import com.example.android_api_eservice.data.entity.PokemonEntity;
 import com.example.android_api_eservice.presentation.pokemon.favorite.adapter.PokemonDetailViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 

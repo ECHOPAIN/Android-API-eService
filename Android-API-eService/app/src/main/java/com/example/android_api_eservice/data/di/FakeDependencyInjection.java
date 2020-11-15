@@ -20,20 +20,15 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
 //I use a fake dependency injection class because we haven't see anything else in Android class yet
 public class FakeDependencyInjection {
-
-
     private static PokemonService pokemonService;
-    private static Retrofit retrofit;
-    private static Gson gson;
     private static PokemonRepository pokemonRepository;
     private static PokemonDatabase pokemonDatabase;
     private static Context applicationContext;
     private static ViewModelFactory viewModelFactory;
-
-
+    private static Retrofit retrofit;
+    private static Gson gson;
 
     public static ViewModelFactory getViewModelFactory() {
         if (viewModelFactory == null) {
@@ -41,7 +36,6 @@ public class FakeDependencyInjection {
         }
         return viewModelFactory;
     }
-
 
     public static PokemonRepository getPokemonRepository() {
         if (pokemonRepository == null) {

@@ -2,14 +2,11 @@ package com.example.android_api_eservice.presentation.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.example.android_api_eservice.data.entity.PokemonEntity;
 import com.example.android_api_eservice.data.repositories.PokemonRepository;
 import com.example.android_api_eservice.presentation.pokemon.favorite.adapter.PokemonDetailViewModel;
 import com.example.android_api_eservice.presentation.pokemon.favorite.mapper.PokemonEntityToDetailViewModelMapper;
-
 import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
@@ -17,12 +14,11 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.ResourceSubscriber;
 
 public class PokemonFavoriteViewModel extends ViewModel {
-
     private PokemonRepository pokemonRepository;
     private CompositeDisposable compositeDisposable;
     private PokemonEntityToDetailViewModelMapper pokemonEntityToDetailViewModelMapper;
-
-
+    private MutableLiveData<List<PokemonDetailViewModel>> favorites;
+    private MutableLiveData<Boolean> isDataLoading = new MutableLiveData<Boolean>();
     final MutableLiveData<Event<String>> pokemonAddedEvent = new MutableLiveData<Event<String>>();
     final MutableLiveData<Event<String>> pokemonDeletedEvent = new MutableLiveData<Event<String>>();
 
@@ -32,7 +28,7 @@ public class PokemonFavoriteViewModel extends ViewModel {
         this.pokemonEntityToDetailViewModelMapper = new PokemonEntityToDetailViewModelMapper();
     }
 
-    public void addPokemonToFavorite(final String pokemonId) {
+    public void addPokemonToFavorites(final String pokemonId) {
         compositeDisposable.add(pokemonRepository.addPokemonToFavorites(pokemonId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -65,11 +61,6 @@ public class PokemonFavoriteViewModel extends ViewModel {
                     }
                 }));
     }
-
-
-
-    private MutableLiveData<List<PokemonDetailViewModel>> favorites;
-    private MutableLiveData<Boolean> isDataLoading = new MutableLiveData<Boolean>();
 
     public MutableLiveData<List<PokemonDetailViewModel>> getFavorites() {
         isDataLoading.setValue(true);

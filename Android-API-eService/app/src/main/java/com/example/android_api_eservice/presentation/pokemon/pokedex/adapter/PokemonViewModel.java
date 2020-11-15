@@ -1,12 +1,10 @@
 package com.example.android_api_eservice.presentation.pokemon.pokedex.adapter;
 
-public class PokemonViewItem {
-
+public class PokemonViewModel {
     private String id;
     private String name;
     private String front_default;
     private boolean isFavorite;
-
 
     public String getId() {
         return id;
@@ -36,7 +34,5 @@ public class PokemonViewItem {
         return isFavorite;
     }
 
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
-    }
+    public void setFavorite(boolean favorite) { isFavorite = favorite; }
 }

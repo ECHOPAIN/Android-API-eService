@@ -22,9 +22,7 @@ public class Sprites {
         return back_shiny_female;
     }
 
-    public void setBack_shiny_female(String back_shiny_female) {
-        this.back_shiny_female = back_shiny_female;
-    }
+    public void setBack_shiny_female(String back_shiny_female) { this.back_shiny_female = back_shiny_female; }
 
     public String getBack_default() {
         return back_default;
@@ -46,9 +44,7 @@ public class Sprites {
         return front_shiny_female;
     }
 
-    public void setFront_shiny_female(String front_shiny_female) {
-        this.front_shiny_female = front_shiny_female;
-    }
+    public void setFront_shiny_female(String front_shiny_female) { this.front_shiny_female = front_shiny_female; }
 
     public String getBack_shiny() {
         return back_shiny;

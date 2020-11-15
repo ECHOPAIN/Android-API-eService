@@ -5,14 +5,6 @@ public class Abilities {
     private String slot;
     private Ability ability;
 
-    public Ability getAbility() {
-        return ability;
-    }
-
-    public void setAbility(Ability ability) {
-        this.ability = ability;
-    }
-
     public boolean isIs_hidden() {
         return is_hidden;
     }
@@ -28,4 +20,8 @@ public class Abilities {
     public void setSlot(String slot) {
         this.slot = slot;
     }
+
+    public Ability getAbility() { return ability; }
+
+    public void setAbility(Ability ability) { this.ability = ability; }
 }

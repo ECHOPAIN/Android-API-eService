@@ -8,30 +8,26 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.android_api_eservice.PokemonDetail;
 import com.example.android_api_eservice.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdapter.PokemonDetailViewHolder>{
-
-
     private List<PokemonDetailViewModel> pokemonDetailViewModelList;
     private PokemonDetailActionInterface pokemonDetailActionInterface;
+
+    // Provide a suitable constructor
     public PokemonDetailAdapter(PokemonDetailActionInterface pokemonDetailActionInterface) {
         pokemonDetailViewModelList = new ArrayList<>();
         this.pokemonDetailActionInterface = pokemonDetailActionInterface;
     }
-
 
     public void bindViewModels(List<PokemonDetailViewModel> pokemonDetailViewModelList){
         this.pokemonDetailViewModelList.clear();
@@ -39,6 +35,7 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
         notifyDataSetChanged();
     }
 
+    // Create new views
     @NonNull
     @Override
     public PokemonDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -57,7 +54,6 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(view.getContext(), pokemonViewItemList.get(position).getName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), PokemonDetail.class);
                 intent.putExtra("pokemonId",pokemonDetailViewModelList.get(position).getId());
                 view.getContext().startActivity(intent);
@@ -65,10 +61,12 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
         });
     }
 
+    // Return the size of your dataset
     @Override
     public int getItemCount() {
         return pokemonDetailViewModelList.size();
     }
+
 
 
     public static class PokemonDetailViewHolder extends RecyclerView.ViewHolder {
@@ -90,10 +88,10 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
         private ImageButton favoriteTrash;
         private PokemonDetailActionInterface pokemonDetailActionInterface;
 
-
         public PokemonDetailViewHolder(View v, final PokemonDetailActionInterface pokemonDetailActionInterface) {
             super(v);
             this.v = v;
+            this.pokemonDetailActionInterface = pokemonDetailActionInterface;
             cardView = v.findViewById(R.id.parent_layout);
             pokemonId = v.findViewById(R.id.pokemon_id);
             imageName = v.findViewById(R.id.pokemon_name);
@@ -109,7 +107,6 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
             pokemonWeight = v.findViewById(R.id.pokemon_weight_value);
             favoriteTrash = v.findViewById(R.id.favorite_trash);
             setupListeners();
-            this.pokemonDetailActionInterface = pokemonDetailActionInterface;
         }
 
         private void setupListeners() {
@@ -120,8 +117,6 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
                 }
             });
         }
-
-
 
         void bind(PokemonDetailViewModel pokemonDetailViewModel) {
             this.pokemonDetailViewModel = pokemonDetailViewModel;

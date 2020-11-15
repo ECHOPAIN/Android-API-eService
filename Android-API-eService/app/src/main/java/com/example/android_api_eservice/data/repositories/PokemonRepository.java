@@ -7,10 +7,7 @@ import com.example.android_api_eservice.data.entity.PokemonEntity;
 import com.example.android_api_eservice.data.repositories.local.PokemonLocalDataSource;
 import com.example.android_api_eservice.data.repositories.mapper.PokemonToPokemonEntityMapper;
 import com.example.android_api_eservice.data.repositories.remote.PokemonRemoteDataSource;
-
-
 import java.util.List;
-
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
 import io.reactivex.Flowable;
@@ -23,13 +20,11 @@ public class PokemonRepository {
     private PokemonRemoteDataSource pokemonRemoteDataSource;
     private PokemonToPokemonEntityMapper pokemonToPokemonEntityMapper;
 
-
     public PokemonRepository(PokemonLocalDataSource pokemonLocalDataSource, PokemonRemoteDataSource pokemonRemoteDataSource,PokemonToPokemonEntityMapper pokemonToPokemonEntityMapper) {
         this.pokemonLocalDataSource = pokemonLocalDataSource;
         this.pokemonRemoteDataSource = pokemonRemoteDataSource;
         this.pokemonToPokemonEntityMapper = pokemonToPokemonEntityMapper;
     }
-
 
     public Single<PokemonSearchResponse> getPokemons(String offset, String limit){
         return pokemonRemoteDataSource.getPokemons(offset, limit)
@@ -71,6 +66,6 @@ public class PokemonRepository {
     }
 
     public Flowable<List<PokemonEntity>> getFavoritePokemons() {
-        return pokemonLocalDataSource.loadFavorites();
+        return pokemonLocalDataSource.getFavoritePokemons();
     }
 }

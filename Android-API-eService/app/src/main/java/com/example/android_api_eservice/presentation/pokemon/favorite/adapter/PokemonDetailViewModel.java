@@ -1,9 +1,5 @@
 package com.example.android_api_eservice.presentation.pokemon.favorite.adapter;
 
-import com.example.android_api_eservice.data.api.model.Types;
-
-import java.util.List;
-
 public class PokemonDetailViewModel {
     public String id;
     private String name;
@@ -19,107 +15,55 @@ public class PokemonDetailViewModel {
     private String height;
     private String weight;
 
-    public String getAttackValue() {
-        return attackValue;
-    }
+    public String getId() { return id; }
 
-    public void setAttackValue(String attackValue) {
-        this.attackValue = attackValue;
-    }
+    public void setId(String id) { this.id = id; }
 
-    public String getDefenseValue() {
-        return defenseValue;
-    }
+    public String getName() { return name; }
 
-    public void setDefenseValue(String defenseValue) {
-        this.defenseValue = defenseValue;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public String getSpecialAttackValue() {
-        return specialAttackValue;
-    }
+    public String getFront_default() { return front_default; }
 
-    public void setSpecialAttackValue(String specialAttackValue) {
-        this.specialAttackValue = specialAttackValue;
-    }
+    public void setFront_default(String front_default) { this.front_default = front_default; }
 
-    public String getSpecialDefenseValue() {
-        return specialDefenseValue;
-    }
+    public String getPrimaryType() { return primaryType; }
 
-    public void setSpecialDefenseValue(String specialDefenseValue) {
-        this.specialDefenseValue = specialDefenseValue;
-    }
+    public void setPrimaryType(String primaryType) { this.primaryType = primaryType; }
 
-    public String getHpValue() {
-        return hpValue;
-    }
+    public String getSecondaryType() { return secondaryType; }
 
-    public void setHpValue(String hpValue) {
-        this.hpValue = hpValue;
-    }
+    public void setSecondaryType(String secondaryType) { this.secondaryType = secondaryType; }
 
-    public String getSpeedValue() {
-        return speedValue;
-    }
+    public String getAttackValue() { return attackValue; }
 
-    public void setSpeedValue(String speedValue) {
-        this.speedValue = speedValue;
-    }
+    public void setAttackValue(String attackValue) { this.attackValue = attackValue; }
 
-    public String getHeight() {
-        return height;
-    }
+    public String getDefenseValue() { return defenseValue; }
 
-    public void setHeight(String height) {
-        this.height = height;
-    }
+    public void setDefenseValue(String defenseValue) { this.defenseValue = defenseValue; }
 
-    public String getWeight() {
-        return weight;
-    }
+    public String getSpecialAttackValue() { return specialAttackValue; }
 
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
+    public void setSpecialAttackValue(String specialAttackValue) { this.specialAttackValue = specialAttackValue; }
 
-    public String getPrimaryType() {
-        return primaryType;
-    }
+    public String getSpecialDefenseValue() { return specialDefenseValue; }
 
-    public void setPrimaryType(String primaryType) {
-        this.primaryType = primaryType;
-    }
+    public void setSpecialDefenseValue(String specialDefenseValue) { this.specialDefenseValue = specialDefenseValue; }
 
-    public String getSecondaryType() {
-        return secondaryType;
-    }
+    public String getHpValue() { return hpValue; }
 
-    public void setSecondaryType(String secondaryType) {
-        this.secondaryType = secondaryType;
-    }
+    public void setHpValue(String hpValue) { this.hpValue = hpValue; }
 
-    public String getId() {
-        return id;
-    }
+    public String getSpeedValue() { return speedValue; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setSpeedValue(String speedValue) { this.speedValue = speedValue; }
 
-    public String getName() {
-        return name;
-    }
+    public String getHeight() { return height; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setHeight(String height) { this.height = height; }
 
-    public String getFront_default() {
-        return front_default;
-    }
+    public String getWeight() { return weight; }
 
-    public void setFront_default(String front_default) {
-        this.front_default = front_default;
-    }
+    public void setWeight(String weight) { this.weight = weight; }
 }

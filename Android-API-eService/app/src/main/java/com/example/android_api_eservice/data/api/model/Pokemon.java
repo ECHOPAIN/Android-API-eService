@@ -5,16 +5,6 @@ public class Pokemon {
     private String url;
     private boolean isFavorite;
 
-    public String getId() {
-        String[] urlSplitted = url.split("/");
-        return urlSplitted[urlSplitted.length - 1];
-    }
-
-    public String getFront_default() {
-        return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+getId()+".png";
-    }
-
-
     public String getName() {
         return name;
     }
@@ -38,4 +28,11 @@ public class Pokemon {
     public boolean isFavorite() {
         return isFavorite;
     }
+
+    public String getId() {
+        String[] urlSplitted = url.split("/");
+        return urlSplitted[urlSplitted.length - 1];
+    }
+
+    public String getFront_default() { return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+getId()+".png"; }
 }

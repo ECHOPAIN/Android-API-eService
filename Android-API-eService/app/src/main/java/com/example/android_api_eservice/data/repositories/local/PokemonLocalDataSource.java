@@ -1,11 +1,7 @@
 package com.example.android_api_eservice.data.repositories.local;
 
-import com.example.android_api_eservice.data.api.model.Pokemon;
 import com.example.android_api_eservice.data.db.PokemonDatabase;
 import com.example.android_api_eservice.data.entity.PokemonEntity;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -21,8 +17,8 @@ public class PokemonLocalDataSource {
         this.pokemonDatabase = pokemonDatabase;
     }
 
-    public Flowable<List<PokemonEntity>> loadFavorites() {
-        return pokemonDatabase.pokemonDao().loadFavorites();
+    public Flowable<List<PokemonEntity>> getFavoritePokemons() {
+        return pokemonDatabase.pokemonDao().getFavoritePokemons();
     }
 
     public CompletableSource addPokemonToFavorites(PokemonEntity pokemonEntity) {

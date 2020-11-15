@@ -9,38 +9,36 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.android_api_eservice.PokemonDetail;
 import com.example.android_api_eservice.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
-    public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonViewHolder> {
-    private List<PokemonViewItem> pokemonViewItemList;
+public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonViewHolder> {
+    private List<PokemonViewModel> pokemonViewModelList;
     private PokemonActionInterface pokemonActionInterface;
-
 
     // Provide a suitable constructor
     public PokemonListAdapter(PokemonActionInterface pokemonActionInterface) {
-        pokemonViewItemList = new ArrayList<>();
+        pokemonViewModelList = new ArrayList<>();
         this.pokemonActionInterface = pokemonActionInterface;
     }
 
-    public void bindViewModels(List<PokemonViewItem> pokemonViewItem) {
-        this.pokemonViewItemList.clear();
-        this.pokemonViewItemList.addAll(pokemonViewItem);
+    public void bindViewModels(List<PokemonViewModel> pokemonViewModel) {
+        this.pokemonViewModelList.clear();
+        this.pokemonViewModelList.addAll(pokemonViewModel);
         notifyDataSetChanged();
     }
 
     // Create new views
+    @NonNull
     @Override
-    public PokemonViewHolder onCreateViewHolder(ViewGroup parent,
-                                             int viewType) {
+    public PokemonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.pokedex_list_item, parent, false);
@@ -51,15 +49,14 @@ import java.util.List;
     // Replace the contents of a view
     @Override
     public void onBindViewHolder(PokemonViewHolder holder, final int position) {
-        holder.bind(pokemonViewItemList.get(position));
+        holder.bind(pokemonViewModelList.get(position));
 
         //open PokemonDetail activity
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(view.getContext(), pokemonViewItemList.get(position).getName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), PokemonDetail.class);
-                intent.putExtra("pokemonId",pokemonViewItemList.get(position).getId());
+                intent.putExtra("pokemonId", pokemonViewModelList.get(position).getId());
                 view.getContext().startActivity(intent);
             }
         });
@@ -68,8 +65,9 @@ import java.util.List;
     // Return the size of your dataset
     @Override
     public int getItemCount() {
-        return pokemonViewItemList.size();
+        return pokemonViewModelList.size();
     }
+
 
 
     public static class PokemonViewHolder extends RecyclerView.ViewHolder {
@@ -79,18 +77,18 @@ import java.util.List;
         private View v;
         private CheckBox favoriteCheckBox;
         private PokemonActionInterface pokemonActionInterface;
-        private PokemonViewItem pokemonViewItem;
+        private PokemonViewModel pokemonViewModel;
         CardView parentLayout;
 
         public PokemonViewHolder(View v, final PokemonActionInterface pokemonActionInterface) {
             super(v);
             this.v = v;
+            this.pokemonActionInterface = pokemonActionInterface;
             pokemonId = v.findViewById((R.id.pokemon_id));
             pokemonName = v.findViewById(R.id.pokemon_name);
             image = v.findViewById(R.id.image);
             parentLayout = itemView.findViewById(R.id.parent_layout);
             favoriteCheckBox = v.findViewById(R.id.favorite_checkbox);
-            this.pokemonActionInterface = pokemonActionInterface;
             setupListeners();
         }
 
@@ -98,34 +96,33 @@ import java.util.List;
             favoriteCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    pokemonActionInterface.onFavoriteToggle(pokemonViewItem.getId(), b);
-                    pokemonViewItem.setFavorite(b);
+                    pokemonActionInterface.onFavoriteToggle(pokemonViewModel.getId(), b);
+                    pokemonViewModel.setFavorite(b);
                 }
             });
         }
 
-
-        void bind(PokemonViewItem pokemonViewItem) {
-            this.pokemonViewItem = pokemonViewItem;
+        void bind(PokemonViewModel pokemonViewModel) {
+            this.pokemonViewModel = pokemonViewModel;
 
             //Id
-            pokemonId.setText("#" + pokemonViewItem.getId());
+            pokemonId.setText("#" + pokemonViewModel.getId());
 
             //Name
-            String name = pokemonViewItem.getName();
+            String name = pokemonViewModel.getName();
             name = name.substring(0, 1).toUpperCase() + name.substring(1);
             pokemonName.setText(name);
             pokemonName.setText(name);
 
             //Image
             Glide.with(v)
-                    .load(pokemonViewItem.getFront_default())
+                    .load(pokemonViewModel.getFront_default())
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(image);
 
             //Favorite CheckBox
-            favoriteCheckBox.setChecked(pokemonViewItem.isFavorite());
+            favoriteCheckBox.setChecked(pokemonViewModel.isFavorite());
         }
 
     }

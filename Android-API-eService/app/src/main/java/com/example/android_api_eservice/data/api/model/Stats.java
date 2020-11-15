@@ -1,7 +1,5 @@
 package com.example.android_api_eservice.data.api.model;
 
-import java.util.List;
-
 public class Stats {
     private String base_stat;
     private String effort;

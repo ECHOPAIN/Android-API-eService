@@ -14,17 +14,15 @@ import io.reactivex.Single;
 
 @Dao
 public interface PokemonDao {
-
     @Query("SELECT * from pokemonentity")
-    Flowable<List<PokemonEntity>> loadFavorites();
+    Flowable<List<PokemonEntity>> getFavoritePokemons();
 
     @Insert
-    public Completable addPokemonToFavorites(PokemonEntity pokemonentity);
+    Completable addPokemonToFavorites(PokemonEntity pokemonentity);
 
     @Query("DELETE FROM pokemonentity WHERE id = :id")
-    public Completable deletePokemonFromFavorites(String id);
+    Completable deletePokemonFromFavorites(String id);
 
     @Query("SELECT id from pokemonentity")
     Single<List<String>> getFavoriteIdList();
-
 }
