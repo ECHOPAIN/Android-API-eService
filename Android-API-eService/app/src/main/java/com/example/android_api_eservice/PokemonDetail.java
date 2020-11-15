@@ -34,7 +34,23 @@ public class PokemonDetail extends AppCompatActivity {
     private TextView textViewPokemonName;
     private TextView textViewPokemonId;
     private ImageView imageView;
+    private ImageView imageViewFront;
+    private ImageView imageViewBack;
+    private ImageView imageViewFrontFemale;
+    private ImageView imageViewBackFemale;
+    private ImageView imageViewFrontShiny;
+    private ImageView imageViewBackShiny;
+    private ImageView imageViewFrontShinyFemale;
+    private ImageView imageViewBackShinyFemale;
+    private LinearLayout layoutFrontFemale;
+    private LinearLayout layoutBackFemale;
+    private LinearLayout layoutFrontShinyFemale;
+    private LinearLayout layoutBackShinyFemale;
     private TextView textViewPokemonType;
+    private TextView textViewFrontMale;
+    private TextView textViewBackMale;
+    private TextView textViewShinyFrontMale;
+    private TextView textViewShinyBackMale;
     private TextView textViewPokemonHeight;
     private TextView textViewPokemonWeight;
     private TextView textViewPokemonHp;
@@ -63,7 +79,23 @@ public class PokemonDetail extends AppCompatActivity {
         textViewPokemonName = findViewById(R.id.pokemon_detail_name);
         textViewPokemonId = findViewById(R.id.pokemon_detail_id);
         imageView = findViewById(R.id.pokemon_detail_image);
+        imageViewFront= findViewById(R.id.pokemon_detail_front_default);
+        imageViewBack= findViewById(R.id.pokemon_detail_back_default);
+        imageViewFrontFemale= findViewById(R.id.pokemon_detail_front_female);
+        imageViewBackFemale= findViewById(R.id.pokemon_detail_back_female);
+        imageViewFrontShiny= findViewById(R.id.pokemon_detail_front_shiny);
+        imageViewBackShiny= findViewById(R.id.pokemon_detail_back_shiny);
+        imageViewFrontShinyFemale= findViewById(R.id.pokemon_detail_front_shiny_female);
+        imageViewBackShinyFemale= findViewById(R.id.pokemon_detail_back_shiny_female);
         textViewPokemonType = findViewById(R.id.pokemon_detail_type);
+        layoutFrontFemale = findViewById(R.id.pokemon_detail_front_female_layout);
+        layoutBackFemale = findViewById(R.id.pokemon_detail_back_female_layout);
+        layoutFrontShinyFemale = findViewById(R.id.pokemon_detail_front_shiny_female_layout);
+        layoutBackShinyFemale = findViewById(R.id.pokemon_detail_back_shiny_female_layout);
+        textViewFrontMale = findViewById(R.id.pokemon_detail_front_default_male_text);
+        textViewBackMale = findViewById(R.id.pokemon_detail_back_default_male_text);
+        textViewShinyFrontMale = findViewById(R.id.pokemon_detail_front_shiny_male_text);
+        textViewShinyBackMale = findViewById(R.id.pokemon_detail_back_shiny_male_text);
         //textViewPokemonHeight = findViewById(R.id.pokemon_detail_height);
         //textViewPokemonWeight = findViewById(R.id.pokemon_detail_weight);
         textViewPokemonHp = findViewById(R.id.pokemon_detail_hp_value);
@@ -201,6 +233,57 @@ public class PokemonDetail extends AppCompatActivity {
         for(Abilities abilities : pokemonDetails.getAbilities()) {
             addAbilityToLayout(abilitiesLayout, abilities);
         }
+
+        //Sprites
+        Boolean differenceBetweenGender = (pokemonDetails.getSprites().getFront_female()!=null);
+
+        Glide.with(this)
+                .load(pokemonDetails.getSprites().getFront_default())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(imageViewFront);
+        Glide.with(this)
+                .load(pokemonDetails.getSprites().getBack_default())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(imageViewBack);
+        Glide.with(this)
+                .load(pokemonDetails.getSprites().getFront_shiny())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(imageViewFrontShiny);
+        Glide.with(this)
+                .load(pokemonDetails.getSprites().getBack_shiny())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(imageViewBackShiny);
+        if(differenceBetweenGender) {
+            Glide.with(this)
+                    .load(pokemonDetails.getSprites().getFront_female())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(imageViewFrontFemale);
+            Glide.with(this)
+                    .load(pokemonDetails.getSprites().getBack_female())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(imageViewBackFemale);
+            Glide.with(this)
+                    .load(pokemonDetails.getSprites().getFront_shiny_female())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(imageViewFrontShinyFemale);
+            Glide.with(this)
+                    .load(pokemonDetails.getSprites().getBack_shiny_female())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(imageViewBackShinyFemale);
+        }else{
+            //hide female layouts
+            layoutFrontFemale.setVisibility(View.GONE);
+            layoutBackFemale.setVisibility(View.GONE);
+            layoutFrontShinyFemale.setVisibility(View.GONE);
+            layoutBackShinyFemale.setVisibility(View.GONE);
+
+            //Male title should now be Male/Female
+            textViewFrontMale.setText("Male/Female");
+            textViewBackMale.setText("Male/Female");
+            textViewShinyFrontMale.setText("Male/Female");
+            textViewShinyBackMale.setText("Male/Female");
+        }
+
 
         detailLayout.setVisibility(View.VISIBLE);
     }

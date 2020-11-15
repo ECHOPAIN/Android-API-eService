@@ -122,7 +122,6 @@ public static class PokemonViewHolder extends RecyclerView.ViewHolder {
                 .load(pokemonViewItem.getFront_default())
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .circleCrop()
                 .into(image);
 
         //Favorite CheckBox

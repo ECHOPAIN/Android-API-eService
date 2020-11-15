@@ -149,7 +149,6 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
                     .load(pokemonDetailViewModel.getFront_default())
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .circleCrop()
                     .into(image);
 
             //Stats
