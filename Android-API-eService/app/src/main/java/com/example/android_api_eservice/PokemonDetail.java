@@ -4,18 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.example.android_api_eservice.data.api.model.Abilities;
+import com.example.android_api_eservice.data.api.model.Ability;
 import com.example.android_api_eservice.data.api.model.PokemonDetails;
 import com.example.android_api_eservice.data.di.FakeDependencyInjection;
 import com.example.android_api_eservice.data.repositories.PokemonRepository;
+
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -44,6 +51,7 @@ public class PokemonDetail extends AppCompatActivity {
     private ProgressBar progressBarPokemonSpeed;
     private LinearLayout detailLayout;
     private ProgressBar progressBar;
+    private LinearLayout abilitiesLayout;
     private PokemonRepository pokemonRepository;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -72,6 +80,7 @@ public class PokemonDetail extends AppCompatActivity {
         progressBarPokemonSpeed = findViewById(R.id.pokemon_detail_speed_bar);
         detailLayout = findViewById(R.id.detail_layout);
         progressBar = findViewById(R.id.pokemon_detail_progress_bar);
+        abilitiesLayout = findViewById(R.id.pokemon_detail_abilities_layout);
 
         pokemonRepository = FakeDependencyInjection.getPokemonRepository();
 
@@ -188,8 +197,44 @@ public class PokemonDetail extends AppCompatActivity {
         //Speed
         bindStat(textViewPokemonSpeed,pokemonDetails.getStats().get(5).getBase_stat(),progressBarPokemonSpeed,Integer.valueOf(pokemonDetails.getStats().get(5).getBase_stat()),maxValue);
 
+        //Abilities
+        for(Abilities abilities : pokemonDetails.getAbilities()) {
+            addAbilityToLayout(abilitiesLayout, abilities);
+        }
 
         detailLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void addAbilityToLayout(LinearLayout abilitiesLayout, Abilities abilities) {
+        RelativeLayout.LayoutParams lparams = new RelativeLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lparams.setMargins(10,0,0,10);
+        RelativeLayout relativeLayout = new RelativeLayout(this);
+        relativeLayout.setLayoutParams(lparams);
+
+        if(abilities.isIs_hidden()){
+            //layout_alignParentLeft
+            TextView textViewHidden=new TextView(this);
+            textViewHidden.setLayoutParams(lparams);
+            textViewHidden.setGravity(Gravity.LEFT);
+            textViewHidden.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
+            textViewHidden.setText("Hidden");
+
+            relativeLayout.addView(textViewHidden);
+        }
+
+        TextView textView=new TextView(this);
+        textView.setLayoutParams(lparams);
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
+        String name = abilities.getAbility().getName();
+        name = name.substring(0, 1).toUpperCase() + name.substring(1);
+        textView.setText(name);
+
+        relativeLayout.addView(textView);
+
+
+        abilitiesLayout.addView(relativeLayout);
     }
 
     private void bindStat(TextView textView, String baseStat, ProgressBar progressBar, Integer baseStatValue, Integer maxValue) {
@@ -255,6 +300,9 @@ public class PokemonDetail extends AppCompatActivity {
                 break;
             case "fairy":
                 linearLayout.setBackgroundResource(R.drawable.fairy);
+                break;
+            case "fly":
+                linearLayout.setBackgroundResource(R.drawable.fly);
                 break;
 
             default:

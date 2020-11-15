@@ -3,7 +3,7 @@ package com.example.android_api_eservice.data.api.model;
 import java.util.List;
 
 public class PokemonDetails {
-    //private Abilities abilities;
+    private List<Abilities> abilities;
     private String base_experience;
     //private Forms forms;
     //private String game_indices;
@@ -21,6 +21,14 @@ public class PokemonDetails {
     private List<Types> types;
     private String weight;
 
+
+    public List<Abilities> getAbilities() {
+        return abilities;
+    }
+
+    public void setAbilities(List<Abilities> abilities) {
+        this.abilities = abilities;
+    }
 
     public List<Stats> getStats() {
         return stats;
