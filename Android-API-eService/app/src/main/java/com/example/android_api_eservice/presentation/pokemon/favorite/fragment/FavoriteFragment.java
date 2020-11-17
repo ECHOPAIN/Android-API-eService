@@ -23,6 +23,7 @@ import com.example.android_api_eservice.presentation.viewmodel.PokemonPokedexVie
 import java.util.List;
 
 public class FavoriteFragment extends Fragment implements PokemonDetailActionInterface {
+    public static final String TAB_NAME = "Favorites";
     private View view;
     private RecyclerView recyclerView;
     private PokemonDetailAdapter pokemonAdapter;

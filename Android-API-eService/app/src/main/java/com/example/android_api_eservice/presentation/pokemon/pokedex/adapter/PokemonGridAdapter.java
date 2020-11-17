@@ -14,7 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.example.android_api_eservice.PokemonDetail;
+import com.example.android_api_eservice.presentation.pokemondetail.PokemonDetailActivity;
 import com.example.android_api_eservice.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class PokemonGridAdapter extends RecyclerView.Adapter<PokemonGridAdapter.
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PokemonDetail.class);
+                Intent intent = new Intent(view.getContext(), PokemonDetailActivity.class);
                 intent.putExtra("pokemonId", pokemonViewModelList.get(position).getId());
                 view.getContext().startActivity(intent);
             }

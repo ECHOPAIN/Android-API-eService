@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.example.android_api_eservice.PokemonDetail;
+import com.example.android_api_eservice.presentation.pokemondetail.PokemonDetailActivity;
 import com.example.android_api_eservice.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PokemonDetail.class);
+                Intent intent = new Intent(view.getContext(), PokemonDetailActivity.class);
                 intent.putExtra("pokemonId",pokemonDetailViewModelList.get(position).getId());
                 view.getContext().startActivity(intent);
             }

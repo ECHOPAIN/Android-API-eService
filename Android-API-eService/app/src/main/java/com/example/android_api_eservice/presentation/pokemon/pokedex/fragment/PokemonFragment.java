@@ -25,6 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class PokemonFragment extends Fragment implements PokemonActionInterface {
+    public static final String TAB_NAME = "Pokedex";
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
