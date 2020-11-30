@@ -1,11 +1,8 @@
 package com.example.android_api_eservice.presentation.pokemondetail;
 
-import android.animation.ObjectAnimator;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -53,7 +50,7 @@ public class PokemonDetailSprites {
     }
 
     public void bind(PokemonDetails pokemonDetails) {
-//Sprites
+        //Sprites
         Boolean differenceBetweenGender = (pokemonDetails.getSprites().getFront_female()!=null);
 
         Glide.with(view)

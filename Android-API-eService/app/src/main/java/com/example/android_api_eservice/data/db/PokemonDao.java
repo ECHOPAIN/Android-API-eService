@@ -3,11 +3,8 @@ package com.example.android_api_eservice.data.db;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
-
 import com.example.android_api_eservice.data.entity.PokemonEntity;
-
 import java.util.List;
-
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;

@@ -1,6 +1,7 @@
 package com.example.android_api_eservice.data.api.model;
 
-public class Stats {
+//This class represent a PokemonStat when requesting the API on the detail of a Pokemon
+public class PokemonStat {
     private String base_stat;
     private String effort;
     private Stat stat;

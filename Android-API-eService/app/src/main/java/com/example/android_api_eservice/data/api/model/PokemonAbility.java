@@ -1,6 +1,7 @@
 package com.example.android_api_eservice.data.api.model;
 
-public class Abilities {
+//This class represent a PokemonAbility when requesting the API on the detail of a Pokemon
+public class PokemonAbility {
     private boolean is_hidden;
     private String slot;
     private Ability ability;
@@ -21,7 +22,11 @@ public class Abilities {
         this.slot = slot;
     }
 
-    public Ability getAbility() { return ability; }
+    public Ability getAbility() {
+        return ability;
+    }
 
-    public void setAbility(Ability ability) { this.ability = ability; }
+    public void setAbility(Ability ability) {
+        this.ability = ability;
+    }
 }

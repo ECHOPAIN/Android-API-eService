@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.android_api_eservice.presentation.pokemondetail.PokemonDetailActivity;
 import com.example.android_api_eservice.R;
+import com.example.android_api_eservice.presentation.util.Util;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,7 +137,7 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
             }else{
                 pokemonType.setText(pokemonDetailViewModel.getPrimaryType().toUpperCase() + " - " + pokemonDetailViewModel.getSecondaryType().toUpperCase());
             }
-            int color = getColorFromType(v.getContext(),pokemonDetailViewModel.getPrimaryType());
+            int color = Util.getColorFromType(v.getContext(),pokemonDetailViewModel.getPrimaryType());
             int transparency = 0XAA000000;
             cardView.setCardBackgroundColor(color+transparency);
 
@@ -172,49 +174,7 @@ public class PokemonDetailAdapter extends RecyclerView.Adapter<PokemonDetailAdap
         }
 
 
-        private int getColorFromType(Context context, String primaryType) {
-            switch(primaryType.toLowerCase()) {
-                case "normal":
-                    return  ContextCompat.getColor(context,R.color.normal);
-                case "fighting":
-                    return ContextCompat.getColor(context,R.color.fighting);
-                case "poison":
-                    return ContextCompat.getColor(context,R.color.poison);
-                case "ground":
-                    return ContextCompat.getColor(context,R.color.ground);
-                case "rock":
-                    return ContextCompat.getColor(context,R.color.rock);
-                case "bug":
-                    return ContextCompat.getColor(context,R.color.bug);
-                case "ghost":
-                    return ContextCompat.getColor(context,R.color.ghost);
-                case "steel":
-                    return ContextCompat.getColor(context,R.color.steel);
-                case "fire":
-                    return ContextCompat.getColor(context,R.color.fire);
-                case "water":
-                    return ContextCompat.getColor(context,R.color.water);
-                case "grass":
-                    return ContextCompat.getColor(context,R.color.grass);
-                case "electric":
-                    return ContextCompat.getColor(context,R.color.electric);
-                case "psychic":
-                    return ContextCompat.getColor(context,R.color.psychic);
-                case "ice":
-                    return ContextCompat.getColor(context,R.color.ice);
-                case "dragon":
-                    return ContextCompat.getColor(context,R.color.dragon);
-                case "dark":
-                    return ContextCompat.getColor(context,R.color.dark);
-                case "fairy":
-                    return ContextCompat.getColor(context,R.color.fairy);
-                case "flying":
-                    return ContextCompat.getColor(context,R.color.flying);
 
-                default:
-                    return ContextCompat.getColor(context,R.color.normal);
-            }
-        }
 
     }
 }

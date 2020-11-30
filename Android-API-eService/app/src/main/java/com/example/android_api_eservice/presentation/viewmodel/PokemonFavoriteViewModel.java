@@ -22,12 +22,14 @@ public class PokemonFavoriteViewModel extends ViewModel {
     final MutableLiveData<Event<String>> pokemonAddedEvent = new MutableLiveData<Event<String>>();
     final MutableLiveData<Event<String>> pokemonDeletedEvent = new MutableLiveData<Event<String>>();
 
+    //constructor
     public PokemonFavoriteViewModel(PokemonRepository pokemonRepository) {
         this.pokemonRepository = pokemonRepository;
         this.compositeDisposable = new CompositeDisposable();
         this.pokemonEntityToDetailViewModelMapper = new PokemonEntityToDetailViewModelMapper();
     }
 
+    //add a Pokemon to the favortie by it's id
     public void addPokemonToFavorites(final String pokemonId) {
         compositeDisposable.add(pokemonRepository.addPokemonToFavorites(pokemonId)
                 .subscribeOn(Schedulers.io())
@@ -45,6 +47,7 @@ public class PokemonFavoriteViewModel extends ViewModel {
                 }));
     }
 
+    //remove a Pokemon from the favortie by it's id
     public void removePokemonFromFavorites(final String pokemonId) {
         compositeDisposable.add(pokemonRepository.removePokemonFromFavorites(pokemonId)
                 .subscribeOn(Schedulers.io())
@@ -62,6 +65,7 @@ public class PokemonFavoriteViewModel extends ViewModel {
                 }));
     }
 
+    //get the list of all the favorite Pokemon
     public MutableLiveData<List<PokemonDetailViewModel>> getFavorites() {
         isDataLoading.setValue(true);
         if (favorites == null) {

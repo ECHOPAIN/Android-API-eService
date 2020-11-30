@@ -1,6 +1,7 @@
 package com.example.android_api_eservice.data.api.model;
 
-public class Types {
+//This class represent a PokemonType when requesting the API on the detail of a Pokemon
+public class PokemonType {
     private String slot;
     private Type type;
 

@@ -2,15 +2,12 @@ package com.example.android_api_eservice.presentation.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.example.android_api_eservice.presentation.pokemon.pokedex.mapper.PokemonToViewModelMapper;
 import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonViewModel;
 import com.example.android_api_eservice.data.api.model.PokemonSearchResponse;
 import com.example.android_api_eservice.data.repositories.PokemonRepository;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -25,6 +22,7 @@ public class PokemonPokedexViewModel extends ViewModel {
     private MutableLiveData<List<PokemonViewModel>> pokemons = new MutableLiveData<List<PokemonViewModel>>();
     private MutableLiveData<Boolean> isDataLoading = new MutableLiveData<Boolean>();
 
+    //constructor
     public PokemonPokedexViewModel(PokemonRepository pokemonRepository) {
         this.pokemonRepository = pokemonRepository;
         this.compositeDisposable = new CompositeDisposable();
@@ -39,6 +37,7 @@ public class PokemonPokedexViewModel extends ViewModel {
         return isDataLoading;
     }
 
+    //load some pokemon to add to the Pokemon list
     public void loadMorePokemons() {
         int offset = 0;
         int limit;
@@ -54,6 +53,7 @@ public class PokemonPokedexViewModel extends ViewModel {
         loadMorePokemons(offset,limit);
     }
 
+    //load "limit" pokemons starting from the "offset" to add to the Pokemon list
     private void loadMorePokemons(int offset, int limit) {
         isDataLoading.setValue(true);
         compositeDisposable.clear();
@@ -83,6 +83,7 @@ public class PokemonPokedexViewModel extends ViewModel {
                 }));
     }
 
+    //remove a Pokemon from the favortie by it's id
     public void removePokemonFromFavorites(String pokemonId) {
         List<PokemonViewModel> pokemonsTmp = getPokemons().getValue();
         for(PokemonViewModel pokemon: pokemonsTmp){

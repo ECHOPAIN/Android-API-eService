@@ -3,7 +3,6 @@ package com.example.android_api_eservice.data.repositories.local;
 import com.example.android_api_eservice.data.db.PokemonDatabase;
 import com.example.android_api_eservice.data.entity.PokemonEntity;
 import java.util.List;
-
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
 import io.reactivex.Flowable;

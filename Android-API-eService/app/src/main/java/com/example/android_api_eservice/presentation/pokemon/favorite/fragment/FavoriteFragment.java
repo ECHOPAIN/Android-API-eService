@@ -19,7 +19,6 @@ import com.example.android_api_eservice.presentation.pokemon.favorite.adapter.Po
 import com.example.android_api_eservice.presentation.viewmodel.Event;
 import com.example.android_api_eservice.presentation.viewmodel.PokemonFavoriteViewModel;
 import com.example.android_api_eservice.presentation.viewmodel.PokemonPokedexViewModel;
-
 import java.util.List;
 
 public class FavoriteFragment extends Fragment implements PokemonDetailActionInterface {

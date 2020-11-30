@@ -1,9 +1,7 @@
 package com.example.android_api_eservice.data.di;
 
 import android.content.Context;
-
 import androidx.room.Room;
-
 import com.example.android_api_eservice.data.db.PokemonDatabase;
 import com.example.android_api_eservice.data.repositories.mapper.PokemonToPokemonEntityMapper;
 import com.example.android_api_eservice.presentation.viewmodel.ViewModelFactory;
@@ -13,14 +11,13 @@ import com.example.android_api_eservice.data.repositories.local.PokemonLocalData
 import com.example.android_api_eservice.data.repositories.remote.PokemonRemoteDataSource;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-//I use a fake dependency injection class because we haven't see anything else in Android class yet
+//I use a fake dependency injection class because we haven't see anything else during Android lessons
 public class FakeDependencyInjection {
     private static PokemonService pokemonService;
     private static PokemonRepository pokemonRepository;

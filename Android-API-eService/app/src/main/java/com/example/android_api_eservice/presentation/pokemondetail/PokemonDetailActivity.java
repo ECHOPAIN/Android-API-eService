@@ -9,6 +9,8 @@ import com.example.android_api_eservice.R;
 import com.example.android_api_eservice.data.api.model.PokemonDetails;
 import com.example.android_api_eservice.data.di.FakeDependencyInjection;
 import com.example.android_api_eservice.data.repositories.PokemonRepository;
+import com.example.android_api_eservice.presentation.util.Util;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -64,8 +66,9 @@ public class PokemonDetailActivity extends AppCompatActivity {
 
     private void bind(PokemonDetails pokemonDetails) {
         //set the background according to the primary type
-        setBackground(detailLayout,pokemonDetails.getTypes().get(0).getType().getName());
+        detailLayout.setBackgroundResource(Util.getBackgroundFromType(pokemonDetails.getTypes().get(0).getType().getName()));
 
+        //Deleguate the binding to the appropriate class
         PokemonDetailHeader pokemonDetailHeader = new PokemonDetailHeader(findViewById(R.id.pokemon_detail_header));
         pokemonDetailHeader.bind(pokemonDetails);
         PokemonDetailStats pokemonDetailStats = new PokemonDetailStats(findViewById(R.id.pokemon_detail_stats));
@@ -78,65 +81,4 @@ public class PokemonDetailActivity extends AppCompatActivity {
         detailLayout.setVisibility(View.VISIBLE);
     }
 
-    private void setBackground(LinearLayout linearLayout, String type) {
-        switch(type.toLowerCase()) {
-            case "normal":
-                linearLayout.setBackgroundResource(R.drawable.normal);
-                break;
-            case "fighting":
-                linearLayout.setBackgroundResource(R.drawable.fighting);
-                break;
-            case "poison":
-                linearLayout.setBackgroundResource(R.drawable.poison);
-                break;
-            case "ground":
-                linearLayout.setBackgroundResource(R.drawable.ground);
-                break;
-            case "rock":
-                linearLayout.setBackgroundResource(R.drawable.rock);
-                break;
-            case "bug":
-                linearLayout.setBackgroundResource(R.drawable.bug);
-                break;
-            case "ghost":
-                linearLayout.setBackgroundResource(R.drawable.ghost);
-                break;
-            case "steel":
-                linearLayout.setBackgroundResource(R.drawable.steel);
-                break;
-            case "fire":
-                linearLayout.setBackgroundResource(R.drawable.fire);
-                break;
-            case "water":
-                linearLayout.setBackgroundResource(R.drawable.water);
-                break;
-            case "grass":
-                linearLayout.setBackgroundResource(R.drawable.grass);
-                break;
-            case "electric":
-                linearLayout.setBackgroundResource(R.drawable.electric);
-                break;
-            case "psychic":
-                linearLayout.setBackgroundResource(R.drawable.psychic);
-                break;
-            case "ice":
-                linearLayout.setBackgroundResource(R.drawable.ice);
-                break;
-            case "dragon":
-                linearLayout.setBackgroundResource(R.drawable.dragon);
-                break;
-            case "dark":
-                linearLayout.setBackgroundResource(R.drawable.dark);
-                break;
-            case "fairy":
-                linearLayout.setBackgroundResource(R.drawable.fairy);
-                break;
-            case "fly":
-                linearLayout.setBackgroundResource(R.drawable.fly);
-                break;
-
-            default:
-                linearLayout.setBackgroundResource(R.drawable.normal);
-        }
-    }
 }

@@ -2,7 +2,6 @@ package com.example.android_api_eservice.presentation.pokemon.pokedex.mapper;
 
 import com.example.android_api_eservice.data.api.model.Pokemon;
 import com.example.android_api_eservice.presentation.pokemon.pokedex.adapter.PokemonViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
