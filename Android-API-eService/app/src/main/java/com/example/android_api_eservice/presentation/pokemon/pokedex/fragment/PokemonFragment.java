@@ -25,6 +25,7 @@ import java.util.List;
 
 public class PokemonFragment extends Fragment implements PokemonActionInterface {
     public static final String TAB_NAME = "Pokedex";
+    private View noPokemonView;
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -49,6 +50,7 @@ public class PokemonFragment extends Fragment implements PokemonActionInterface 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.fragment_pokedex, container, false);
+        noPokemonView = view.findViewById(R.id.pokedex_no_pokemon);
         fab = view.findViewById(R.id.fab);
         progressBar = view.findViewById(R.id.progress_bar);
         return view;
@@ -77,6 +79,7 @@ public class PokemonFragment extends Fragment implements PokemonActionInterface 
         pokemonPokedexViewModel.getPokemons().observe(getViewLifecycleOwner(), new Observer<List<PokemonViewModel>>() {
             @Override
             public void onChanged(List<PokemonViewModel> pokemonViewModelList) {
+                noPokemonView.setVisibility(View.GONE);
                 pokemonListAdapter.bindViewModels(pokemonViewModelList);
                 pokemonGridAdapter.bindViewModels(pokemonViewModelList);
             }

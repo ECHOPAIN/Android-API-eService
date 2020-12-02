@@ -8,6 +8,12 @@
     android:layout_height="match_parent"
     tools:context=".presentation.pokemon.pokedex.fragment.PokemonFragment">
 
+    <include layout="@layout/pokedex_no_pokemon"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:id="@+id/pokedex_no_pokemon"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

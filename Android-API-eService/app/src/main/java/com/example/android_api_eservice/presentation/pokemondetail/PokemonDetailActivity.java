@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.example.android_api_eservice.R;
 import com.example.android_api_eservice.data.api.model.PokemonDetails;
 import com.example.android_api_eservice.data.di.FakeDependencyInjection;
@@ -54,9 +56,10 @@ public class PokemonDetailActivity extends AppCompatActivity {
                         @Override
                         public void onError(Throwable e) {
                             // handle the error case
-                            //Yet, do not do nothing in this app
+                            Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_SHORT).show();
                             System.out.println(e.toString());
                             progressBar.setVisibility(View.GONE);
+                            finish();
                         }
 
                     }));
