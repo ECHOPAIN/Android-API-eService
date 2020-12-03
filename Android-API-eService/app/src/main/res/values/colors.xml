@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#d42e22</color>
     <color name="colorAccent">#1cc4d6</color>
 
+    <color name="textTitle">#000000</color>
+    <color name="textDetail">#444444</color>
 
     <color name="normal">#A8A878</color>
     <color name="fighting">#C03028</color>

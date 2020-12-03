@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".presentation.pokemon.favorite.fragment.FavoriteFragment">
 
+    <include layout="@layout/pokedex_no_favorite"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:id="@+id/pokedex_no_favorite"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

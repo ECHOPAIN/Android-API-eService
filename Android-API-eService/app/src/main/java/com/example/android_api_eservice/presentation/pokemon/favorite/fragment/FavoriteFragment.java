@@ -28,6 +28,7 @@ public class FavoriteFragment extends Fragment implements PokemonDetailActionInt
     private PokemonDetailAdapter pokemonAdapter;
     private PokemonFavoriteViewModel pokemonFavoriteViewModel;
     private PokemonPokedexViewModel pokemonPokedexViewModel;
+    private View noFavoriteView;
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -43,6 +44,7 @@ public class FavoriteFragment extends Fragment implements PokemonDetailActionInt
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.fragment_favorite, container, false);
+        noFavoriteView = view.findViewById(R.id.pokedex_no_favorite);
         return view;
     }
 
@@ -67,6 +69,9 @@ public class FavoriteFragment extends Fragment implements PokemonDetailActionInt
         pokemonFavoriteViewModel.getFavorites().observe(getViewLifecycleOwner(), new Observer<List<PokemonDetailViewModel>>() {
             @Override
             public void onChanged(List<PokemonDetailViewModel> pokemonDetailViewModelList) {
+                if(pokemonDetailViewModelList.size()>0) {
+                    noFavoriteView.setVisibility(View.GONE);
+                }
                 pokemonAdapter.bindViewModels(pokemonDetailViewModelList);
             }
         });

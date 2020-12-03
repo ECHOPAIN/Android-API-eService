@@ -3,4 +3,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_message">Try again later</string>
     <string name="no_pokemon">No Pokemon to display</string>
+    <string name="no_favorite">You have no Favorite Pokemon yet</string>
+    <string name="no_favorite_detail_1">You can add a Pokemon to your favorite by clicking the</string>
+    <string name="no_favorite_detail_2">icon next to a Pokemon in the pokedex tab</string>
 </resources>
