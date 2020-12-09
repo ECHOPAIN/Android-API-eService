@@ -10,8 +10,6 @@
     app:cardBackgroundColor="#AAFFFFFF"
     android:id="@+id/parent_layout">
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -77,34 +75,5 @@
         </RelativeLayout>
 
     </LinearLayout>
-
-
-    <!--ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@mipmap/ic_launcher"
-        android:id="@+id/image"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:textColor="#000"
-        android:textSize="17dp"
-        android:text="MissingNo"
-        android:id="@+id/pokemon_name"/>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true">
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:button="@null"
-            android:background="@drawable/custom_favorite_checkbox"
-            android:id="@+id/favorite_checkbox"/>
-        </RelativeLayout-->
 
 </androidx.cardview.widget.CardView>

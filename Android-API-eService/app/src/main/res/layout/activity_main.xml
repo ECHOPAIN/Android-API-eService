@@ -19,7 +19,6 @@
         android:id="@+id/tab_layout"/>
     </androidx.viewpager.widget.ViewPager>
 
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
