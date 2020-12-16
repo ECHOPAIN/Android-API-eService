@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_gravity="center"
+        android:visibility="gone"
         android:id="@+id/pokedex_no_pokemon"/>
 
     <androidx.recyclerview.widget.RecyclerView

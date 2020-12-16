@@ -79,7 +79,6 @@ public class PokemonFragment extends Fragment implements PokemonActionInterface 
         pokemonPokedexViewModel.getPokemons().observe(getViewLifecycleOwner(), new Observer<List<PokemonViewModel>>() {
             @Override
             public void onChanged(List<PokemonViewModel> pokemonViewModelList) {
-                noPokemonView.setVisibility(View.GONE);
                 pokemonListAdapter.bindViewModels(pokemonViewModelList);
                 pokemonGridAdapter.bindViewModels(pokemonViewModelList);
             }
@@ -89,6 +88,7 @@ public class PokemonFragment extends Fragment implements PokemonActionInterface 
             @Override
             public void onChanged(Boolean isDataLoading) {
                 progressBar.setVisibility(isDataLoading ? View.VISIBLE : View.GONE);
+                noPokemonView.setVisibility(!isDataLoading && pokemonListAdapter.getItemCount() <= 0? View.VISIBLE : View.GONE);
             }
         });
     }
