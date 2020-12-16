@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class PokemonPokedexViewModel extends ViewModel {
     private final int MAX_POKEMON=151;
-    private final int MAX_POKEMON_PER_CALL=18;
+    private final int MAX_POKEMON_PER_CALL=36;
     private PokemonRepository pokemonRepository;
     private CompositeDisposable compositeDisposable;
     private PokemonToViewModelMapper pokemonToViewModelMapper;
